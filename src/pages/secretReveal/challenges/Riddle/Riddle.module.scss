@@ -1,0 +1,102 @@
+@use "../../../../styles/variables" as *;
+
+.riddleChallenge {
+  text-align: center;
+}
+
+.iconContainer {
+  width: 4rem;
+  height: 4rem;
+  background-color: adjust-color($primary-color, 35%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  overflow: hidden;
+
+  .icon {
+    font-size: 2rem;
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+    &.thinking {
+      transform: translateY(0);
+      opacity: 1;
+
+      &.hide {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
+
+    &.solved {
+      transform: translateY(100%);
+      opacity: 0;
+
+      &.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $text-color;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: adjust-color($text-color, 20%);
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  max-width: 24rem;
+  margin: 0 auto;
+
+  .inputGroup {
+    margin-bottom: 1rem;
+  }
+
+  .input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid $border-color;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+
+    &:disabled {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    color: $error-color;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.riddle {
+  background-color: adjust-color($background-color, -3%);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid $border-color;
+  font-size: 1.125rem;
+  color: $text-color;
+  font-style: italic;
+}

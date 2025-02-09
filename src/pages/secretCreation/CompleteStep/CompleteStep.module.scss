@@ -1,0 +1,90 @@
+@use "../../../styles/variables" as *;
+
+.completeStep {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  .completeTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 1.5rem;
+  }
+
+  .messageCard {
+    background-color: $background-color;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid $border-color;
+
+    .messageContent {
+      font-size: 1.125rem;
+      color: $text-color;
+      margin-bottom: 1rem;
+    }
+
+    .urlContainer {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .messageUrl {
+      flex: 1;
+      font-family: monospace;
+      padding: 0.5rem;
+      background-color: adjust-color($background-color, -3%);
+      border-radius: 0.25rem;
+      color: adjust-color($text-color, 20%);
+      word-break: break-all;
+    }
+
+    .copyButton {
+      padding: 0.5rem;
+      background-color: white;
+      color: $primary-color;
+      border: 1px solid $border-color;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: adjust-color($background-color, -3%);
+        border-color: $primary-color;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+    }
+  }
+
+  .restartButton {
+    padding: 0.75rem 2rem;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: adjust-color($primary-color, -10%);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.4);
+    }
+  }
+}

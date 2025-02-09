@@ -1,0 +1,29 @@
+@use "../../../styles/variables" as *;
+
+.form {
+  margin-bottom: 2rem;
+
+  .inputGroup {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .input {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border: 1px solid $border-color;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+
+    &:disabled {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+    }
+  }
+}

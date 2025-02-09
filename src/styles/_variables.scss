@@ -1,0 +1,11 @@
+@use "sass:color";
+
+$primary-color: #2563eb;
+$background-color: #f9fafb;
+$text-color: #1f2937;
+$border-color: #e5e7eb;
+$error-color: #ef4444;
+
+@function adjust-color($color, $lightness) {
+  @return color.adjust($color, $lightness: $lightness);
+}
