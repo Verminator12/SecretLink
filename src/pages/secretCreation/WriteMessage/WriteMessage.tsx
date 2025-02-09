@@ -20,12 +20,12 @@ export const WriteMessage: React.FC<WriteMessageProps> = ({ onSubmit }) => {
         <input
           type="text"
           value={content}
-          onChange={(e) => dispatch(setContent(e.target.value))}
+          onChange={e => dispatch(setContent(e.target.value))}
           placeholder={t.writeSecret}
           className={styles.input}
           disabled={loading}
         />
-        <SLButton disabled={loading || !content.trim()} loading={loading}>
+        <SLButton type="submit" disabled={loading || !content.trim()} loading={loading}>
           {t.continueButton}
         </SLButton>
       </div>

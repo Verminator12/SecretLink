@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Copy, Check } from 'lucide-react'
+import { LuCopy, LuCheck } from 'react-icons/lu'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppSelector } from '../../../hooks'
-import { SubmitButton } from '../../../components/SubmitButton'
 import styles from './CompleteStep.module.scss'
+import { SLButton } from '../../../components/SLButton'
 
 interface CompleteStepProps {
   onRestart: () => void
@@ -31,18 +31,19 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({ onRestart }) => {
           <p className={styles.messageUrl}>
             {fullLink}
           </p>
-          <button 
-            onClick={copyMessageLink} 
+          <SLButton
+            onClick={copyMessageLink}
             className={styles.copyButton}
             title={t.copyLink}
+            center
           >
-            {isCopied ? <Check size={20} /> : <Copy size={20} />}
-          </button>
+            {isCopied ? <LuCheck size={20} /> : <LuCopy size={20} />}
+          </SLButton>
         </div>
       </div>
-      <button onClick={onRestart} className={styles.restartButton}>
+      <SLButton onClick={onRestart} className={styles.restartButton}>
         {t.createNewSecret}
-      </button>
+      </SLButton>
     </div>
   )
 }

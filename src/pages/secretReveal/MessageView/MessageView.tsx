@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Clock } from 'lucide-react'
-import { MessageService } from '../../../services/api'
+import { LuClock } from 'react-icons/lu'
+import { SecretService } from '../../../services/api'
 import { Password } from '../challenges/Password'
 import { Memory } from '../challenges/Memory'
 import { Riddle } from '../challenges/Riddle'
@@ -24,13 +24,13 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   const [isFadingOut, setIsFadingOut] = useState(false)
-  
+
   const { hours, minutes, seconds, total } = useCountdown(expirationDate)
 
   const handleMessageExpiration = useCallback(async (messageId: string) => {
     setError(t.secretExpired)
     try {
-      await MessageService.deleteMessage(messageId)
+      await SecretService.deleteMessage(messageId)
     } catch (err) {
       console.error('Error deleting expired message:', err)
     }
@@ -38,21 +38,21 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
 
   useEffect(() => {
     const fetchMessage = async () => {
-      const { data, error } = await MessageService.fetchMessageBySlug(slug)
-      
+      const { data, error } = await SecretService.fetchMessageBySlug(slug)
+
       if (error || !data) {
         setError(t.secretNotFound)
       } else {
         const expDate = new Date(data.expiration_date)
         setExpirationDate(expDate)
-        
+
         if (expDate.getTime() <= Date.now()) {
           await handleMessageExpiration(data.id)
         } else {
           setMessage(data)
         }
       }
-      
+
       setLoading(false)
     }
 
@@ -99,7 +99,7 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
     switch (message.protection_type) {
       case 'password':
         return (
-          <Password 
+          <Password
             message={message}
             onComplete={handleChallengeComplete}
           />
@@ -126,9 +126,9 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
 
   const renderConfetti = () => {
     return Array.from({ length: 50 }).map((_, i) => (
-      <div 
-        key={i} 
-        className={`${styles.confetti} ${isFadingOut ? styles.fadeOut : ''}`} 
+      <div
+        key={i}
+        className={`${styles.confetti} ${isFadingOut ? styles.fadeOut : ''}`}
       />
     ))
   }
@@ -137,7 +137,7 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
     <div className={styles.container}>
       {showConfetti && renderConfetti()}
       {isUnlocked && <div className={styles.successOverlay} />}
-      
+
       <div className={styles.content}>
         <div className={styles.header}>
           <h1 className={styles.title}>{t.secretForYou}</h1>
@@ -145,44 +145,52 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
 
         {total !== null && total > 0 && message && (
           <div className={styles.expirationTimer}>
-            <Clock className={styles.clockIcon} />
+            <LuClock className={styles.clockIcon} />
             <span className={styles.timerText}>
               {t.expiresIn.replace(
                 '{time}',
-                `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`
+                `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`,
               )}
             </span>
           </div>
         )}
 
         <div className={styles.messageContainer}>
-          {loading ? (
-            <div className={styles.loading}>{t.loading}</div>
-          ) : error ? (
-            <div className={styles.error}>
-              <p>{error}</p>
-              <SLButton onClick={onBack} type="button" center>
-                {t.createYourSecret}
-              </SLButton>
-            </div>
-          ) : message ? (
-            isUnlocked ? (
-              <>
-                <div className={styles.messageCard}>
-                  <p className={styles.messageContent}>{message.content}</p>
-                </div>
-                <div className={styles.createButtonContainer}>
-                  <SLButton onClick={onBack} type="button" center>
-                    {t.createYourSecret}
-                  </SLButton>
-                </div>
-              </>
-            ) : (
-              <div className={styles.challenge}>
-                {renderChallenge()}
-              </div>
-            )
-          ) : null}
+          {loading
+            ? (
+                <div className={styles.loading}>{t.loading}</div>
+              )
+            : error
+              ? (
+                  <div className={styles.error}>
+                    <p>{error}</p>
+                    <SLButton onClick={onBack} type="button" center>
+                      {t.createYourSecret}
+                    </SLButton>
+                  </div>
+                )
+              : message
+                ? (
+                    isUnlocked
+                      ? (
+                          <>
+                            <div className={styles.messageCard}>
+                              <p className={styles.messageContent}>{message.content}</p>
+                            </div>
+                            <div className={styles.createButtonContainer}>
+                              <SLButton onClick={onBack} type="button" center>
+                                {t.createYourSecret}
+                              </SLButton>
+                            </div>
+                          </>
+                        )
+                      : (
+                          <div className={styles.challenge}>
+                            {renderChallenge()}
+                          </div>
+                        )
+                  )
+                : null}
         </div>
       </div>
     </div>

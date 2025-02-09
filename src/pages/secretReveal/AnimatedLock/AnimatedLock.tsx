@@ -1,5 +1,4 @@
 import React from 'react'
-import { Lock } from 'lucide-react'
 import styles from './AnimatedLock.module.scss'
 
 interface AnimatedLockProps {

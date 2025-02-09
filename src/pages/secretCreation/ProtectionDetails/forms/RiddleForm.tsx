@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useTranslation } from '../../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/messageSlice'
-import { MessageService } from '../../../../services/api'
+import { SecretService } from '../../../../services/api'
 import { hashText } from '../../../../utils/crypto'
 import { SLButton } from '../../../../components/SLButton'
 import styles from '../ProtectionDetails.module.scss'
@@ -25,13 +25,13 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
     const hashedAnswer = await hashText(answer.trim().toLowerCase())
     const riddleData = JSON.stringify({
       riddle: riddle.trim(),
-      answer: hashedAnswer
+      answer: hashedAnswer,
     })
 
-    const { data, error } = await MessageService.createMessage(
+    const { data, error } = await SecretService.createMessage(
       content,
       'riddle',
-      riddleData
+      riddleData,
     )
 
     if (!error && data) {
@@ -57,7 +57,7 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
           <div className={styles.inputGroup}>
             <textarea
               value={riddle}
-              onChange={(e) => setRiddle(e.target.value)}
+              onChange={e => setRiddle(e.target.value)}
               placeholder={t.riddlePlaceholder}
               className={`${styles.input} ${styles.textarea}`}
               disabled={loading}
@@ -68,14 +68,15 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
             <input
               type="text"
               value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
+              onChange={e => setAnswer(e.target.value)}
               placeholder={t.answerPlaceholder}
               className={styles.input}
               disabled={loading}
             />
           </div>
-          <SLButton 
-            disabled={loading || !riddle.trim() || !answer.trim()} 
+          <SLButton
+            type="submit"
+            disabled={loading || !riddle.trim() || !answer.trim()}
             loading={loading}
             center
           >

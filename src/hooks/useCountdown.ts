@@ -10,10 +10,10 @@ interface TimeRemaining {
 export function useCountdown(targetDate: Date | null): TimeRemaining {
   const calculateTimeRemaining = (): TimeRemaining => {
     if (targetDate === null) {
-       return { hours: 0, minutes: 0, seconds: 0, total: null }
+      return { hours: 0, minutes: 0, seconds: 0, total: null }
     }
     const total = new Date(targetDate).getTime() - Date.now()
-    
+
     if (total <= 0) {
       return { hours: 0, minutes: 0, seconds: 0, total: 0 }
     }

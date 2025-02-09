@@ -3,27 +3,43 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import stylistic from '@stylistic/eslint-plugin'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    ignores: ['dist'],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser
+      ecmaVersion: 'latest',
+      globals: { ...globals.browser, ...globals.node }
     },
     plugins: {
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
+      'react-refresh': reactRefresh,
+      '@stylistic': stylistic
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      ...stylistic.configs['recommended-flat'].rules,
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true }
       ],
-      'comma-dangle': ['error', 'never']
-    }
+      'react-hooks/exhaustive-deps': 'off',
+      '@stylistic/brace-style': ['error', "1tbs"],
+      "no-unused-vars": "off",
+      '@typescript-eslint/no-unused-vars': [
+        'error', {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ]
   }
-)
+})

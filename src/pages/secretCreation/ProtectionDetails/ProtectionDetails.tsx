@@ -3,10 +3,8 @@ import { useAppSelector } from '../../../hooks'
 import { PasswordForm } from './forms/PasswordForm'
 import { GameForm } from './forms/GameForm'
 import { RiddleForm } from './forms/RiddleForm'
-import styles from './ProtectionDetails.module.scss'
 
 interface ProtectionDetailsProps {
-  onSubmit: (e: React.FormEvent) => void
   onBack: () => void
 }
 

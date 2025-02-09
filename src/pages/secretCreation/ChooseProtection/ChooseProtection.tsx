@@ -2,21 +2,21 @@ import React from 'react'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { setProtectionType } from '../../../store/messageSlice'
-import { SubmitButton } from '../../../components/SubmitButton'
 import styles from './ChooseProtection.module.scss'
+import { SLButton } from '../../../components/SLButton'
 
 interface ChooseProtectionProps {
   onSubmit: (e: React.FormEvent) => void
   onBack: () => void
 }
 
-export const ChooseProtection: React.FC<ChooseProtectionProps> = ({ 
+export const ChooseProtection: React.FC<ChooseProtectionProps> = ({
   onSubmit,
-  onBack
+  onBack,
 }) => {
   const t = useTranslation()
   const dispatch = useAppDispatch()
-  const { protectionType, loading } = useAppSelector(state => state.message)
+  const { protectionType } = useAppSelector(state => state.message)
 
   return (
     <>
@@ -48,13 +48,12 @@ export const ChooseProtection: React.FC<ChooseProtectionProps> = ({
         </button>
       </div>
       <form onSubmit={onSubmit} className={styles.form}>
-        <button
+        <SLButton
           type="submit"
           disabled={!protectionType}
-          className={styles.button}
         >
           {t.continueButton}
-        </button>
+        </SLButton>
       </form>
     </>
   )

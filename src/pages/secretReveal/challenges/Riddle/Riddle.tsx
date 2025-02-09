@@ -10,9 +10,9 @@ interface RiddleProps {
   onComplete: () => void
 }
 
-export const Riddle: React.FC<RiddleProps> = ({ 
+export const Riddle: React.FC<RiddleProps> = ({
   message,
-  onComplete
+  onComplete,
 }) => {
   const t = useTranslation()
   const [answer, setAnswer] = useState('')
@@ -22,15 +22,16 @@ export const Riddle: React.FC<RiddleProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     try {
       const protection = JSON.parse(message.protection_data || '{}')
-      
+
       if (!protection.riddle || !protection.answer) {
         throw new Error('Invalid riddle data')
       }
 
       const hashedAnswer = await hashText(answer.toLowerCase().trim())
+
       if (hashedAnswer === protection.answer) {
         setIsUnlocking(true)
         setIsSolved(true)
@@ -67,7 +68,7 @@ export const Riddle: React.FC<RiddleProps> = ({
       </div>
       <h2 className={styles.title}>{t.solveRiddle}</h2>
       <p className={styles.description}>{t.riddleDescription}</p>
-      
+
       {riddleText && (
         <div className={styles.riddle}>
           {riddleText}
@@ -79,14 +80,14 @@ export const Riddle: React.FC<RiddleProps> = ({
           <input
             type="text"
             value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
+            onChange={e => setAnswer(e.target.value)}
             placeholder={t.riddleAnswerPlaceholder}
             className={styles.input}
             disabled={isUnlocking}
           />
           {error && <p className={styles.error}>{error}</p>}
         </div>
-        <SLButton disabled={!answer.trim() || isUnlocking} loading={isUnlocking} center>
+        <SLButton type="submit" disabled={!answer.trim() || isUnlocking} loading={isUnlocking} center>
           {t.checkAnswer}
         </SLButton>
       </form>

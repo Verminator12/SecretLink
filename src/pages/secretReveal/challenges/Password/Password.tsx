@@ -11,9 +11,9 @@ interface PasswordProps {
   onComplete: () => void
 }
 
-export const Password: React.FC<PasswordProps> = ({ 
+export const Password: React.FC<PasswordProps> = ({
   message,
-  onComplete
+  onComplete,
 }) => {
   const t = useTranslation()
   const [password, setPassword] = useState('')
@@ -44,14 +44,14 @@ export const Password: React.FC<PasswordProps> = ({
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
           placeholder={t.passwordPlaceholder}
           className={styles.input}
           disabled={isUnlocking}
         />
         {error && <p className={styles.error}>{error}</p>}
       </div>
-      <SLButton disabled={!password.trim() || isUnlocking} loading={isUnlocking} center>
+      <SLButton type="submit" disabled={!password.trim() || isUnlocking} loading={isUnlocking} center>
         {t.unlockSecret}
       </SLButton>
     </form>

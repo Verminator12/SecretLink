@@ -20,7 +20,7 @@ const initialState: MessageState = {
   generatedMessage: null,
   currentSlug: null,
   step: 'message',
-  isTransitioning: false
+  isTransitioning: false,
 }
 
 export const messageSlice = createSlice({
@@ -51,10 +51,10 @@ export const messageSlice = createSlice({
     setIsTransitioning: (state, action: PayloadAction<boolean>) => {
       state.isTransitioning = action.payload
     },
-    resetState: (state) => {
+    resetState: (_state) => {
       return initialState
-    }
-  }
+    },
+  },
 })
 
 export const {
@@ -66,7 +66,7 @@ export const {
   setCurrentSlug,
   setStep,
   setIsTransitioning,
-  resetState
+  resetState,
 } = messageSlice.actions
 
 export default messageSlice.reducer

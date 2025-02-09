@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Gamepad2 } from 'lucide-react'
+import { LuGamepad2 } from 'react-icons/lu'
 import type { Message } from '../../../../types'
 import { SLButton } from '../../../../components/SLButton'
 import styles from './Memory.module.scss'
@@ -10,15 +10,22 @@ interface MemoryProps {
   t: Record<string, string>
 }
 
+type Card = {
+  id: string
+  emoji: string
+  isFlipped: boolean
+  isMatched: boolean
+}
+
 const EMOJIS = ['🎮', '🎲', '🎯', '🎨', '🎭', '🎪']
 
-export const Memory: React.FC<MemoryProps> = ({ 
+export const Memory: React.FC<MemoryProps> = ({
   onComplete,
-  t 
+  t,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [cards, setCards] = useState<Card[]>([])
-  const [flippedCards, setFlippedCards] = useState<number[]>([])
+  const [flippedCards, setFlippedCards] = useState<string[]>([])
   const [matchedPairs, setMatchedPairs] = useState(0)
   const [moves, setMoves] = useState(0)
 
@@ -37,21 +44,20 @@ export const Memory: React.FC<MemoryProps> = ({
   }, [matchedPairs, onComplete])
 
   const initializeGame = () => {
-    const cardPairs = EMOJIS.flatMap((emoji, index) => 
-      [{ 
+    const cardPairs = EMOJIS.flatMap(emoji =>
+      [{
         id: emoji,
         emoji,
         isFlipped: false,
-        isMatched: false
+        isMatched: false,
       },
-      { 
+      {
         id: `${emoji}-duplicate`,
         emoji,
         isFlipped: false,
-        isMatched: false
+        isMatched: false,
       }])
 
-    // Shuffle the cards
     const shuffledCards = cardPairs.sort(() => Math.random() - 0.5)
 
     setCards(shuffledCards)
@@ -60,11 +66,11 @@ export const Memory: React.FC<MemoryProps> = ({
     setMoves(0)
   }
 
-  const handleCardClick = (cardId: number) => {
+  const handleCardClick = (cardId: string) => {
     if (
-      flippedCards.length === 2 || // Don't allow flipping while checking a pair
-      flippedCards.includes(cardId) || // Don't allow flipping the same card
-      cards.find((card) => card.id === cardId).isMatched // Don't allow flipping matched cards
+      flippedCards.length === 2 // Don't allow flipping while checking a pair
+      || flippedCards.includes(cardId) // Don't allow flipping the same card
+      || cards.find(card => card.id === cardId)?.isMatched // Don't allow flipping matched cards
     ) {
       return
     }
@@ -74,16 +80,16 @@ export const Memory: React.FC<MemoryProps> = ({
 
     if (newFlippedCards.length === 2) {
       const [firstId, secondId] = newFlippedCards
-      const firstCard = cards.find((card) => card.id === firstId)
-      const secondCard = cards.find((card) => card.id === secondId)
+      const firstCard = cards.find(card => card.id === firstId)
+      const secondCard = cards.find(card => card.id === secondId)
 
       setMoves(prev => prev + 1)
 
-      if (firstCard.emoji === secondCard.emoji) {
-        const updatedCards = cards.map(card => 
-            card.id === firstId || card.id === secondId
-              ? { ...card, isMatched: true }
-              : card)
+      if (firstCard?.emoji === secondCard?.emoji) {
+        const updatedCards = cards.map(card =>
+          card.id === firstId || card.id === secondId
+            ? { ...card, isMatched: true }
+            : card)
 
         setCards(updatedCards)
         setMatchedPairs(prev => prev + 1)
@@ -101,7 +107,7 @@ export const Memory: React.FC<MemoryProps> = ({
     return (
       <div className={styles.gameChallenge}>
         <div className={styles.iconContainer}>
-          <Gamepad2 className={styles.icon} />
+          <LuGamepad2 className={styles.icon} />
         </div>
         <h2 className={styles.title}>{t.playToUnlock}</h2>
         <p className={styles.description}>{t.gameDescriptionChallenge}</p>
@@ -126,12 +132,15 @@ export const Memory: React.FC<MemoryProps> = ({
         </div>
         <div className={styles.stat}>
           <span className={styles.label}>{t.pairs}</span>
-          <span className={styles.value}>{matchedPairs}/6</span>
+          <span className={styles.value}>
+            {matchedPairs}
+            /6
+          </span>
         </div>
       </div>
 
       <div className={styles.grid}>
-        {cards.map(card => {
+        {cards.map((card) => {
           const showCard = card.isFlipped || card.isMatched || flippedCards.includes(card.id)
 
           return (
@@ -144,13 +153,13 @@ export const Memory: React.FC<MemoryProps> = ({
               <div className={styles.cardInner}>
                 <div className={styles.cardFront} />
                 <div className={styles.cardBack}>
-                  {showCard && 
-                      <span className={styles.emoji}>{card.emoji}</span>
-                  }
+                  {showCard
+                  && <span className={styles.emoji}>{card.emoji}</span>}
                 </div>
               </div>
             </button>
-          )}
+          )
+        },
         )}
       </div>
     </div>

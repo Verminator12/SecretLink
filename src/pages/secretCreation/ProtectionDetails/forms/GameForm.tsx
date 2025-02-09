@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from '../../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/messageSlice'
-import { MessageService } from '../../../../services/api'
+import { SecretService } from '../../../../services/api'
 import { SLButton } from '../../../../components/SLButton'
 import styles from '../ProtectionDetails.module.scss'
 
@@ -20,10 +20,10 @@ export const GameForm: React.FC<GameFormProps> = ({ onBack }) => {
     dispatch(setLoading(true))
 
     const gameConfig = JSON.stringify({ type: 'memory', pairs: 6 })
-    const { data, error } = await MessageService.createMessage(
+    const { data, error } = await SecretService.createMessage(
       content,
       'game',
-      gameConfig
+      gameConfig,
     )
 
     if (!error && data) {
@@ -48,6 +48,7 @@ export const GameForm: React.FC<GameFormProps> = ({ onBack }) => {
           <h2 className={styles.formTitle}>{t.gameOption}</h2>
           <p className={styles.formDescription}>{t.gameDescriptionCreation}</p>
           <SLButton
+            type="submit"
             disabled={loading}
             loading={loading}
             center

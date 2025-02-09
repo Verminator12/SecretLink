@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
-import { MessageService } from './services/api'
-import { MessageView } from './pages/secretReveal/MessageView'
-import { WriteMessage } from './pages/secretCreation/WriteMessage'
-import { ChooseProtection } from './pages/secretCreation/ChooseProtection'
-import { ProtectionDetails } from './pages/secretCreation/ProtectionDetails'
-import { CompleteStep } from './pages/secretCreation/CompleteStep'
+import { SecretService } from './services/api'
+import { MessageView } from './pages/secretReveal'
+import { WriteMessage, ChooseProtection, ProtectionDetails, CompleteStep } from './pages/secretCreation'
 import { useTranslation } from './hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from './hooks'
 import {
@@ -14,7 +11,7 @@ import {
   setLoading,
   setStep,
   setProtectionType,
-  resetState
+  resetState,
 } from './store/messageSlice'
 import { hashText } from './utils/crypto'
 import styles from './styles/App.module.scss'
@@ -26,11 +23,9 @@ export const App: React.FC = () => {
     content,
     protectionType,
     password,
-    loading,
-    generatedMessage,
     currentSlug,
     step,
-    isTransitioning
+    isTransitioning,
   } = useAppSelector(state => state.message)
 
   useEffect(() => {
@@ -65,14 +60,14 @@ export const App: React.FC = () => {
     }
 
     dispatch(setLoading(true))
-    const protectionData = protectionType === 'password' 
+    const protectionData = protectionType === 'password'
       ? await hashText(password)
       : JSON.stringify({ type: 'memory', pairs: 6 })
 
-    const { data, error } = await MessageService.createMessage(
-      content, 
+    const { data, error } = await SecretService.createMessage(
+      content,
       protectionType!,
-      protectionData
+      protectionData,
     )
 
     if (!error && data) {
@@ -83,7 +78,7 @@ export const App: React.FC = () => {
         dispatch(setIsTransitioning(false))
       }, 300)
     }
-    
+
     dispatch(setLoading(false))
   }
 
@@ -137,7 +132,6 @@ export const App: React.FC = () => {
       return (
         <div className={className}>
           <ProtectionDetails
-            onSubmit={handleSubmit}
             onBack={handleBack}
           />
         </div>

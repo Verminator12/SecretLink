@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from '../../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { setPassword, setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/messageSlice'
-import { MessageService } from '../../../../services/api'
+import { SecretService } from '../../../../services/api'
 import { hashText } from '../../../../utils/crypto'
 import { SLButton } from '../../../../components/SLButton'
 import styles from '../ProtectionDetails.module.scss'
@@ -21,10 +21,10 @@ export const PasswordForm: React.FC<PasswordFormProps> = ({ onBack }) => {
     dispatch(setLoading(true))
 
     const hashedPassword = await hashText(password)
-    const { data, error } = await MessageService.createMessage(
+    const { data, error } = await SecretService.createMessage(
       content,
       'password',
-      hashedPassword
+      hashedPassword,
     )
 
     if (!error && data) {
@@ -51,13 +51,13 @@ export const PasswordForm: React.FC<PasswordFormProps> = ({ onBack }) => {
             <input
               type="password"
               value={password}
-              onChange={(e) => dispatch(setPassword(e.target.value))}
+              onChange={e => dispatch(setPassword(e.target.value))}
               placeholder={t.passwordPlaceholder}
               className={styles.input}
               disabled={loading}
             />
           </div>
-          <SLButton disabled={loading || !password.trim()} loading={loading} center>
+          <SLButton type="submit" disabled={loading || !password.trim()} loading={loading} center>
             {loading ? t.sendingButton : t.generateButton}
           </SLButton>
         </form>

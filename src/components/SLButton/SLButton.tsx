@@ -16,7 +16,7 @@ export const SLButton: React.FC<SLButtonProps> = ({
   block,
   center,
   variant = 'primary',
-  type = 'submit',
+  type = 'button',
   children,
   className,
   ...props
@@ -26,7 +26,7 @@ export const SLButton: React.FC<SLButtonProps> = ({
     styles[variant],
     block ? styles.block : '',
     center ? styles.center : '',
-    className
+    className,
   ].filter(Boolean).join(' ')
 
   return (

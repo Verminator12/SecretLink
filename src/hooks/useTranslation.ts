@@ -9,12 +9,12 @@ export function useTranslation() {
 
   useEffect(() => {
     const browserLang = navigator.language.toLowerCase().split('-')[0]
-    
-    // if (browserLang === 'fr') {
-    //   setTranslations(frTranslations)
-    // } else {
-    //   setTranslations(enTranslations)
-    // }
+
+    if (browserLang === 'fr') {
+      setTranslations(frTranslations)
+    } else {
+      setTranslations(enTranslations)
+    }
   }, [])
 
   return translations

@@ -3,8 +3,8 @@ import messageReducer from './messageSlice'
 
 export const store = configureStore({
   reducer: {
-    message: messageReducer
-  }
+    message: messageReducer,
+  },
 })
 
 export type RootState = ReturnType<typeof store.getState>
