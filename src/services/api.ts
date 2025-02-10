@@ -1,8 +1,8 @@
 import { supabase } from '../lib/supabase'
-import type { Message, ProtectionType } from '../types'
+import type { Secret, ProtectionType } from '../types'
 
 export class SecretService {
-  static async fetchMessageBySlug(slug: string): Promise<{ data: Message | null, error: Error | null }> {
+  static async fetchMessageBySlug(slug: string): Promise<{ data: Secret | null, error: Error | null }> {
     try {
       const { data, error } = await supabase
         .from('messages')
@@ -30,7 +30,7 @@ export class SecretService {
     content: string,
     protectionType: ProtectionType,
     protectionData: string,
-  ): Promise<{ data: Message | null, error: Error | null }> {
+  ): Promise<{ data: Secret | null, error: Error | null }> {
     try {
       const slug = Math.random().toString(36).substring(2, 8)
 

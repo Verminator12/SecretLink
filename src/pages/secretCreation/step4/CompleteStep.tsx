@@ -12,7 +12,7 @@ interface CompleteStepProps {
 export const CompleteStep: React.FC<CompleteStepProps> = ({ onRestart }) => {
   const t = useTranslation()
   const [isCopied, setIsCopied] = useState(false)
-  const { generatedMessage } = useAppSelector(state => state.message)
+  const { generatedMessage } = useAppSelector(state => state.secret)
   const fullLink = `${window.location.origin}?m=${generatedMessage?.slug}`
 
   const copyMessageLink = () => {

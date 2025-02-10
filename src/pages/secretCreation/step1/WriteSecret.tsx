@@ -1,18 +1,18 @@
 import React from 'react'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { setContent } from '../../../store/messageSlice'
+import { setContent } from '../../../store/secretSlice'
 import { SLButton } from '../../../components/SLButton'
-import styles from './WriteMessage.module.scss'
+import styles from './WriteSecret.module.scss'
 
-interface WriteMessageProps {
+interface WriteSecretProps {
   onSubmit: (e: React.FormEvent) => void
 }
 
-export const WriteMessage: React.FC<WriteMessageProps> = ({ onSubmit }) => {
+export const WriteSecret: React.FC<WriteSecretProps> = ({ onSubmit }) => {
   const t = useTranslation()
   const dispatch = useAppDispatch()
-  const { content, loading } = useAppSelector(state => state.message)
+  const { content, loading } = useAppSelector(state => state.secret)
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>

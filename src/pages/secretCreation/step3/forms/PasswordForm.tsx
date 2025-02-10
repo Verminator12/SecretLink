@@ -1,37 +1,30 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTranslation } from '../../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
-import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/messageSlice'
+import { setPassword, setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/secretSlice'
 import { SecretService } from '../../../../services/api'
 import { hashText } from '../../../../utils/crypto'
 import { SLButton } from '../../../../components/SLButton'
 import styles from '../ProtectionDetails.module.scss'
 
-interface RiddleFormProps {
+interface PasswordFormProps {
   onBack: () => void
 }
 
-export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
+export const PasswordForm: React.FC<PasswordFormProps> = ({ onBack }) => {
   const t = useTranslation()
   const dispatch = useAppDispatch()
-  const { content, loading } = useAppSelector(state => state.message)
-  const [riddle, setRiddle] = useState('')
-  const [answer, setAnswer] = useState('')
+  const { password, content, loading } = useAppSelector(state => state.secret)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     dispatch(setLoading(true))
 
-    const hashedAnswer = await hashText(answer.trim().toLowerCase())
-    const riddleData = JSON.stringify({
-      riddle: riddle.trim(),
-      answer: hashedAnswer,
-    })
-
+    const hashedPassword = await hashText(password)
     const { data, error } = await SecretService.createMessage(
       content,
-      'riddle',
-      riddleData,
+      'password',
+      hashedPassword,
     )
 
     if (!error && data) {
@@ -53,33 +46,18 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
       </button>
       <div className={styles.protectionForm}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <h2 className={styles.formTitle}>{t.riddleLabel}</h2>
-          <div className={styles.inputGroup}>
-            <textarea
-              value={riddle}
-              onChange={e => setRiddle(e.target.value)}
-              placeholder={t.riddlePlaceholder}
-              className={`${styles.input} ${styles.textarea}`}
-              disabled={loading}
-              rows={4}
-            />
-          </div>
+          <h2 className={styles.formTitle}>{t.passwordLabel}</h2>
           <div className={styles.inputGroup}>
             <input
-              type="text"
-              value={answer}
-              onChange={e => setAnswer(e.target.value)}
-              placeholder={t.answerPlaceholder}
+              type="password"
+              value={password}
+              onChange={e => dispatch(setPassword(e.target.value))}
+              placeholder={t.passwordPlaceholder}
               className={styles.input}
               disabled={loading}
             />
           </div>
-          <SLButton
-            type="submit"
-            disabled={loading || !riddle.trim() || !answer.trim()}
-            loading={loading}
-            center
-          >
+          <SLButton type="submit" disabled={loading || !password.trim()} loading={loading} center>
             {loading ? t.sendingButton : t.generateButton}
           </SLButton>
         </form>

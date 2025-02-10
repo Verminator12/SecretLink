@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useTranslation } from '../../../../hooks/useTranslation'
 import { hashText } from '../../../../utils/crypto'
 import { SLButton } from '../../../../components/SLButton'
-import type { Message } from '../../../../types'
+import type { Secret } from '../../../../types'
 import styles from './Riddle.module.scss'
 
 interface RiddleProps {
-  message: Message
+  message: Secret
   onComplete: () => void
 }
 

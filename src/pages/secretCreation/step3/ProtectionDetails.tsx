@@ -9,7 +9,7 @@ interface ProtectionDetailsProps {
 }
 
 export const ProtectionDetails: React.FC<ProtectionDetailsProps> = ({ onBack }) => {
-  const { protectionType } = useAppSelector(state => state.message)
+  const { protectionType } = useAppSelector(state => state.secret)
 
   switch (protectionType) {
     case 'password':

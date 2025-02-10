@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import enTranslations from '../i18n/en.json'
-import frTranslations from '../i18n/fr.json'
+import enTranslations from '../translations/en.json'
+import frTranslations from '../translations/fr.json'
 
 type Translations = typeof enTranslations
 

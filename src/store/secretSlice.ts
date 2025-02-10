@@ -1,30 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { Message, ProtectionType } from '../types'
+import type { Secret, ProtectionType } from '../types'
 
-interface MessageState {
+export interface SecretState {
   content: string
   protectionType: ProtectionType | null
   password: string
   loading: boolean
-  generatedMessage: Message | null
+  generatedMessage: Secret | null
   currentSlug: string | null
-  step: 'message' | 'protection' | 'details' | 'complete'
+  step: 'secret' | 'protection' | 'details' | 'complete'
   isTransitioning: boolean
 }
 
-const initialState: MessageState = {
+const initialState: SecretState = {
   content: '',
   protectionType: null,
   password: '',
   loading: false,
   generatedMessage: null,
   currentSlug: null,
-  step: 'message',
+  step: 'secret',
   isTransitioning: false,
 }
 
-export const messageSlice = createSlice({
-  name: 'message',
+export const secretSlice = createSlice({
+  name: 'secret',
   initialState,
   reducers: {
     setContent: (state, action: PayloadAction<string>) => {
@@ -39,13 +39,13 @@ export const messageSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload
     },
-    setGeneratedMessage: (state, action: PayloadAction<Message | null>) => {
+    setGeneratedMessage: (state, action: PayloadAction<Secret | null>) => {
       state.generatedMessage = action.payload
     },
     setCurrentSlug: (state, action: PayloadAction<string | null>) => {
       state.currentSlug = action.payload
     },
-    setStep: (state, action: PayloadAction<MessageState['step']>) => {
+    setStep: (state, action: PayloadAction<SecretState['step']>) => {
       state.step = action.payload
     },
     setIsTransitioning: (state, action: PayloadAction<boolean>) => {
@@ -67,6 +67,6 @@ export const {
   setStep,
   setIsTransitioning,
   resetState,
-} = messageSlice.actions
+} = secretSlice.actions
 
-export default messageSlice.reducer
+export default secretSlice.reducer

@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { LuClock } from 'react-icons/lu'
-import { SecretService } from '../../../services/api'
-import { Password } from '../challenges/Password'
-import { Memory } from '../challenges/Memory'
-import { Riddle } from '../challenges/Riddle'
-import { useTranslation } from '../../../hooks/useTranslation'
-import { useCountdown } from '../../../hooks/useCountdown'
-import { SLButton } from '../../../components/SLButton'
-import type { Message } from '../../../types'
-import styles from './MessageView.module.scss'
+import { SecretService } from '../../services/api'
+import { Password, Memory, Riddle } from '.'
+import { useTranslation } from '../../hooks/useTranslation'
+import { useCountdown } from '../../hooks/useCountdown'
+import { SLButton } from '../../components/SLButton'
+import type { Secret } from '../../types'
+import styles from './SecretReveal.module.scss'
+import { setCurrentSlug } from '../../store/secretSlice'
+import { useAppDispatch } from '../../hooks'
 
-interface MessageViewProps {
+interface SecretRevealProps {
   slug: string
-  onBack: () => void
 }
 
-export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
+export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
   const t = useTranslation()
-  const [message, setMessage] = useState<Message | null>(null)
+  const dispatch = useAppDispatch()
+  const [message, setMessage] = useState<Secret | null>(null)
   const [expirationDate, setExpirationDate] = useState<Date | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -35,6 +35,11 @@ export const MessageView: React.FC<MessageViewProps> = ({ slug, onBack }) => {
       console.error('Error deleting expired message:', err)
     }
   }, [t])
+
+  const onBack = () => {
+    dispatch(setCurrentSlug(null))
+    window.history.pushState({}, '', window.location.pathname)
+  }
 
   useEffect(() => {
     const fetchMessage = async () => {

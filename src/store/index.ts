@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import messageReducer from './messageSlice'
+import messageReducer from './secretSlice'
 
 export const store = configureStore({
   reducer: {
-    message: messageReducer,
+    secret: messageReducer,
   },
 })
 

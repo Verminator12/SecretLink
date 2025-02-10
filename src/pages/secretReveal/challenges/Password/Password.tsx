@@ -3,11 +3,11 @@ import { useTranslation } from '../../../../hooks/useTranslation'
 import { hashText } from '../../../../utils/crypto'
 import { AnimatedLock } from '../../AnimatedLock'
 import { SLButton } from '../../../../components/SLButton'
-import type { Message } from '../../../../types'
+import type { Secret } from '../../../../types'
 import styles from './Password.module.scss'
 
 interface PasswordProps {
-  message: Message
+  message: Secret
   onComplete: () => void
 }
 

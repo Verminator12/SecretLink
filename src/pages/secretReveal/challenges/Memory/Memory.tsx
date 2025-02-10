@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { LuGamepad2 } from 'react-icons/lu'
-import type { Message } from '../../../../types'
+import type { Secret } from '../../../../types'
 import { SLButton } from '../../../../components/SLButton'
 import styles from './Memory.module.scss'
 
 interface MemoryProps {
-  message: Message
+  message: Secret
   onComplete: () => void
   t: Record<string, string>
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { setProtectionType } from '../../../store/messageSlice'
+import { setProtectionType } from '../../../store/secretSlice'
 import styles from './ChooseProtection.module.scss'
 import { SLButton } from '../../../components/SLButton'
 
@@ -16,7 +16,7 @@ export const ChooseProtection: React.FC<ChooseProtectionProps> = ({
 }) => {
   const t = useTranslation()
   const dispatch = useAppDispatch()
-  const { protectionType } = useAppSelector(state => state.message)
+  const { protectionType } = useAppSelector(state => state.secret)
 
   return (
     <>
