@@ -1,3 +1,3 @@
-export * from './AnimatedLock'
+export { AnimatedLock } from './AnimatedLock'
 export * from './challenges'
-export * from './SecretReveal'
+export { SecretReveal } from './SecretReveal'
