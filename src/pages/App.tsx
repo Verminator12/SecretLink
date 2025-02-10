@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import {
   setCurrentSlug,
 } from '../store/secretSlice'
-import { SecretReveal } from './SecretReveals'
-import { SecretCreation } from './SecretCreations'
+import { SecretReveal } from './SecretReveal'
+import { SecretCreation } from './SecretCreation'
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
