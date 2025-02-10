@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from './hooks'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import {
   setCurrentSlug,
-} from './store/secretSlice'
-import { SecretReveal } from './pages/SecretReveal'
-import { SecretCreation } from './pages/SecretCreation'
+} from '../store/secretSlice'
+import { SecretReveal } from './SecretReveal'
+import { SecretCreation } from './SecretCreation'
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
