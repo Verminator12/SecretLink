@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useTranslation } from '../../../../hooks/useTranslation'
-import { hashText } from '../../../../utils/crypto'
-import { AnimatedLock } from '../../AnimatedLock'
-import { SLButton } from '../../../../components/SLButton'
-import type { Secret } from '../../../../types'
+import { useTranslation } from '../../../hooks'
+import { hashText } from '../../../utils/crypto'
+import { AnimatedLock } from './AnimatedLock'
+import { SLButton } from '../../../components/SLButton'
+import type { Secret } from '../../../types'
 import styles from './Password.module.scss'
 
 interface PasswordProps {

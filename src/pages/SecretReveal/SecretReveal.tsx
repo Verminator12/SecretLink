@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { LuClock } from 'react-icons/lu'
 import { SecretService } from '../../services/api'
-import { Password, Memory, Riddle } from '.'
+import { Password, Memory, Riddle } from '../challenges'
 import { useTranslation } from '../../hooks/useTranslation'
 import { useCountdown } from '../../hooks/useCountdown'
 import { SLButton } from '../../components/SLButton'

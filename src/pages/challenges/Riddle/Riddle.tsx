@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useTranslation } from '../../../../hooks/useTranslation'
-import { hashText } from '../../../../utils/crypto'
-import { SLButton } from '../../../../components/SLButton'
-import type { Secret } from '../../../../types'
+import { useTranslation } from '../../../hooks/useTranslation'
+import { hashText } from '../../../utils/crypto'
+import { SLButton } from '../../../components/SLButton'
+import type { Secret } from '../../../types'
 import styles from './Riddle.module.scss'
 
 interface RiddleProps {
