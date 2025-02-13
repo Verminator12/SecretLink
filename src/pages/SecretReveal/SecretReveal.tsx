@@ -41,26 +41,26 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
     window.history.pushState({}, '', window.location.pathname)
   }
 
-  useEffect(() => {
-    const fetchMessage = async () => {
-      const { data, error } = await SecretService.fetchMessageBySlug(slug)
+  const fetchMessage = async () => {
+    const { data, error } = await SecretService.fetchMessageBySlug(slug)
 
-      if (error || !data) {
-        setError(t.secretNotFound)
+    if (error || !data) {
+      setError(t.secretNotFound)
+    } else {
+      const expDate = new Date(data.expiration_date)
+      setExpirationDate(expDate)
+
+      if (expDate.getTime() <= Date.now()) {
+        await handleMessageExpiration(data.id)
       } else {
-        const expDate = new Date(data.expiration_date)
-        setExpirationDate(expDate)
-
-        if (expDate.getTime() <= Date.now()) {
-          await handleMessageExpiration(data.id)
-        } else {
-          setMessage(data)
-        }
+        setMessage(data)
       }
-
-      setLoading(false)
     }
 
+    setLoading(false)
+  }
+
+  useEffect(() => {
     fetchMessage()
   }, [slug, t, handleMessageExpiration])
 
