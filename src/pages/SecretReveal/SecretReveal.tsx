@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { LuClock } from 'react-icons/lu'
 import { SecretService } from '../../services/api'
-import { Password, Memory, Riddle } from '../challenges'
+import { Password, Memory, Riddle, Minesweeper } from '../challenges'
 import { useTranslation } from '../../hooks/useTranslation'
 import { useCountdown } from '../../hooks/useCountdown'
-import { SLButton } from '../../components/SLButton'
+import { SLButton } from '../../components'
 import type { Secret } from '../../types'
 import styles from './SecretReveal.module.scss'
 import { setCurrentSlug } from '../../store/secretSlice'
@@ -105,22 +105,28 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
       case 'password':
         return (
           <Password
-            message={message}
+            parameters={message.protection_data}
             onComplete={handleChallengeComplete}
           />
         )
-      case 'game':
+      case 'memory':
         return (
           <Memory
-            message={message}
+            parameters={message.protection_data}
             onComplete={handleChallengeComplete}
-            t={t}
           />
         )
       case 'riddle':
         return (
           <Riddle
-            message={message}
+            parameters={message.protection_data}
+            onComplete={handleChallengeComplete}
+          />
+        )
+      case 'minesweeper':
+        return (
+          <Minesweeper
+            parameters={message.protection_data}
             onComplete={handleChallengeComplete}
           />
         )
@@ -138,65 +144,55 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
     ))
   }
 
+  const messageComponent = isUnlocked
+    ? (
+        <>
+          <div className={styles.messageCard}>
+            <p className={styles.messageContent}>{message?.content}</p>
+          </div>
+          <div className={styles.createButtonContainer}>
+            <SLButton onClick={onBack} type="button" center>
+              {t.createYourSecret}
+            </SLButton>
+          </div>
+        </>
+      )
+    : (
+        <div className={styles.challenge}>
+          {renderChallenge()}
+        </div>
+      )
+
   return (
-    <div className={styles.container}>
+    <div>
       {showConfetti && renderConfetti()}
       {isUnlocked && <div className={styles.successOverlay} />}
 
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>{t.secretForYou}</h1>
+      {total !== null && total > 0 && message && (
+        <div className={styles.expirationTimer}>
+          <LuClock className={styles.clockIcon} />
+          <span className={styles.timerText}>
+            {t.expiresIn.replace(
+              '{time}',
+              `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`,
+            )}
+          </span>
         </div>
+      )}
 
-        {total !== null && total > 0 && message && (
-          <div className={styles.expirationTimer}>
-            <LuClock className={styles.clockIcon} />
-            <span className={styles.timerText}>
-              {t.expiresIn.replace(
-                '{time}',
-                `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`,
-              )}
-            </span>
-          </div>
-        )}
-
-        <div className={styles.messageContainer}>
-          {loading
+      <div className={styles.messageContainer}>
+        {loading
+          ? <div className={styles.loading}>{t.loading}</div>
+          : error
             ? (
-                <div className={styles.loading}>{t.loading}</div>
+                <div className={styles.error}>
+                  <p>{error}</p>
+                  <SLButton onClick={onBack} type="button" center>
+                    {t.createYourSecret}
+                  </SLButton>
+                </div>
               )
-            : error
-              ? (
-                  <div className={styles.error}>
-                    <p>{error}</p>
-                    <SLButton onClick={onBack} type="button" center>
-                      {t.createYourSecret}
-                    </SLButton>
-                  </div>
-                )
-              : message
-                ? (
-                    isUnlocked
-                      ? (
-                          <>
-                            <div className={styles.messageCard}>
-                              <p className={styles.messageContent}>{message.content}</p>
-                            </div>
-                            <div className={styles.createButtonContainer}>
-                              <SLButton onClick={onBack} type="button" center>
-                                {t.createYourSecret}
-                              </SLButton>
-                            </div>
-                          </>
-                        )
-                      : (
-                          <div className={styles.challenge}>
-                            {renderChallenge()}
-                          </div>
-                        )
-                  )
-                : null}
-        </div>
+            : message && messageComponent}
       </div>
     </div>
   )

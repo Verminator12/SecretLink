@@ -1,48 +1,70 @@
 {
   "title": "SecretLink 🤫",
-  "slogan": "🔒 Un secret, un défi – Ouvrez si vous l'osez !",
-  "description": "💌 Envoyez un secret accessible via un lien, mais avec une touche unique ! Ajoutez un mot de passe, un mini-jeu ou une autre condition pour déverrouiller son contenu. À vous de choisir comment révéler votre secret !",
-  "secretForYou": "Quelqu'un a un Secret à te dire 🤫",
-  "writeSecret": "Écrivez votre secret...",
+  "slogan": "🔒 Un secret, un défi - L'ouvriras-tu à temps ?",
+  "description": {
+    "howItWorks": "💌 Envoies un secret accessible via un lien, mais avec une touche unique ! Ajoutes un mot de passe, un mini-jeu ou une autre condition pour déverrouiller son contenu. À toi de choisir comment révéler ton secret !",
+    "selfDestructWarning": "💣 Ton secret s'auto-détruira dans 24h"
+  },
+  "challenges": {
+    "password": {
+      "title": "🔑 Mot de passe",
+      "description": "Simple et sécurisé - protégez ton secret avec un mot de passe",
+      "form": {
+        "label": "Choisis un mot de passe",
+        "placeholder": "Entre le mot de passe..."
+      }
+    },
+    "riddle": {
+      "title": "🤔 Énigme",
+      "description": "Le destinataire devra résoudre ton énigme pour voir ton secret",
+      "form": {
+        "label": "Créé une énigme",
+        "placeholder": "Écris ton énigme...",
+        "answerPlaceholder": "Entre la réponse..."
+      }
+    },
+    "memory": {
+      "title": "🧠 Jeu de mémoire",
+      "gameName": "Jeu de mémoire",
+      "description": "Le destinataire devra trouver toutes les paires pour déverrouiller ton secret"
+    },
+    "minesweeper": {
+      "title": "🚩 Démineur",
+      "gameName": "Démineur",
+      "description": "Le destinataire devra déminer le terrain sans toucher de mine pour déverrouiller ton secret"
+    }
+  },
+  "beforeGame": {
+    "title": "Jouez pour déverrouiller le secret",
+    "description": "Tu devras gagner une partie de {game} pour voir le secret",
+    "startGame": "Commencer le jeu"
+  },
+  "secretForYou": "SecretLink - Quelqu'un a un Secret à te dire 🤫",
+  "writeSecret": "Écris ton secret...",
   "generateButton": "Générer",
   "sendingButton": "Envoi...",
-  "noSecrets": "Pas encore de secrets. Écrivez quelque chose de spécial !",
   "linkCopied": "Lien copié dans le presse-papiers !",
   "loading": "Chargement du secret...",
   "secretNotFound": "Secret introuvable 😥",
   "secretExpired": "Ce secret s'est auto-détruit 😥",
   "expiresIn": "Le secret s'auto-détruira dans {time}",
   "back": "Retour",
-  "protectionType": "Comment voulez-vous protéger votre secret ?",
-  "passwordOption": "🔑 Mot de passe",
-  "gameOption": "🎮 Mini-jeu",
-  "riddleOption": "🤔 Énigme",
-  "passwordLabel": "Choisissez un mot de passe",
-  "passwordPlaceholder": "Entrez le mot de passe...",
-  "passwordDescription": "Simple et sécurisé - protégez votre secret avec un mot de passe",
-  "riddleLabel": "Créez une énigme",
-  "riddlePlaceholder": "Écrivez votre énigme...",
+  "protectionType": "Comment veux-tu protéger ton secret ?",
   "answerLabel": "Réponse correcte",
-  "answerPlaceholder": "Entrez la réponse...",
-  "gameDescriptionCreation": "Le destinataire devra gagner une partie de Memory pour voir le secret",
-  "riddleDescriptionCreation": "Le destinataire devra résoudre votre énigme pour voir le secret",
-  "gameDescriptionChallenge": "Tu devras gagner une partie de Memory pour voir le secret",
   "riddleDescription": "Résolvez cette énigme pour déverrouiller le secret",
   "continueButton": "Continuer",
   "backToOptions": "Retour aux options",
-  "secretGenerated": "Votre secret est prêt ! 🎉",
+  "secretGenerated": "Ton secret est prêt ! 🎉",
   "createNewSecret": "Créer un nouveau secret",
-  "createYourSecret": "Créer votre propre secret",
+  "createYourSecret": "Créer ton propre secret",
   "copyLink": "Copier le lien",
-  "enterPassword": "Entrez le mot de passe pour déverrouiller",
+  "enterPassword": "Entre le mot de passe pour déverrouiller",
   "incorrectPassword": "Mot de passe incorrect. Veuillez réessayer.",
   "incorrectAnswer": "Ce n'est pas la bonne réponse. Essayez encore !",
   "unlockSecret": "Déverrouiller le secret",
   "solveRiddle": "C'est l'heure de l'énigme !",
-  "riddleAnswerPlaceholder": "Votre réponse...",
+  "riddleAnswerPlaceholder": "Ta réponse...",
   "checkAnswer": "Vérifier la réponse",
-  "playToUnlock": "Jouez pour déverrouiller le secret",
-  "startGame": "Commencer le jeu",
   "moves": "Coups",
   "pairs": "Paires"
 }

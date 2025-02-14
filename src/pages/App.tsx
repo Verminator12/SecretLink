@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import {
-  setCurrentSlug,
-} from '../store/secretSlice'
+import { useAppDispatch, useAppSelector, useTranslation } from '../hooks'
+import { setCurrentSlug } from '../store/secretSlice'
 import { SecretReveal } from './SecretReveal'
 import { SecretCreation } from './SecretCreation'
+import { Layout } from '../components'
 
 export const App: React.FC = () => {
+  const t = useTranslation()
   const dispatch = useAppDispatch()
   const {
     currentSlug,
@@ -21,5 +21,9 @@ export const App: React.FC = () => {
     }
   }, [])
 
-  return currentSlug ? <SecretReveal slug={currentSlug} /> : <SecretCreation />
+  return (
+    <Layout title={currentSlug ? t.secretForYou : t.title}>
+      {currentSlug ? <SecretReveal slug={currentSlug} /> : <SecretCreation />}
+    </Layout>
+  )
 }

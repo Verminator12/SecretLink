@@ -1,12 +1,48 @@
 {
   "title": "SecretLink 🤫",
-  "slogan": "🔒 A secret, a challenge – Open if you dare!",
-  "description": "💌 Send a secret accessible via a link, but with a unique twist! Add a password, a mini-game, or another condition to unlock its content. It's up to you to choose how to reveal your secret!",
-  "secretForYou": "Someone has a Secret for you 🤫",
+  "slogan": "🔒 A secret, a challenge - Will you open it in time?",
+  "description": {
+    "howItWorks": "💌 Send a secret accessible via a link, but with a unique twist! Add a password, a mini-game, or another condition to unlock its content. It's up to you to choose how to reveal your secret!",
+    "selfDestructWarning": "💣 Your secret will self-destruct after 24 hours"
+  },
+  "challenges": {
+    "password": {
+      "title": "🔑 Password",
+      "description": "Simple et secure - protect your secret with a password",
+      "form": {
+        "label": "Choose a password",
+        "placeholder": "Enter password..."
+      }
+    },
+    "riddle": {
+      "title": "🤔 Riddle",
+      "description": "The recipient will need solve your riddle to unlock the secret",
+      "form": {
+        "label": "Create a riddle",
+        "placeholder": "Write your riddle...",
+        "answerPlaceholder": "Enter the answer..."
+      }
+    },
+    "memory": {
+      "title": "🧠 Memory",
+      "gameName": "Memory",
+      "description": "The recipient will need to match all pairs to unlock the secret"
+    },
+    "minesweeper": {
+      "title": "🚩 Minesweeper",
+      "gameName": "Minesweeper",
+      "description": "The recipient will need to clear the board without hitting a mine to unlock the secret"
+    }
+  },
+  "beforeGame": {
+    "title": "Play to unlock the secret",
+    "description": "You will need to win a game of {game} to see the secret",
+    "startGame": "Start game"
+  },
+  "secretForYou": "SecretLink - Someone has a Secret for you 🤫",
   "writeSecret": "Write your secret...",
   "generateButton": "Generate",
   "sendingButton": "Sending...",
-  "noSecrets": "No secrets yet. Write something special!",
   "linkCopied": "Link copied to clipboard!",
   "loading": "Loading secret...",
   "secretNotFound": "Secret not found 😥",
@@ -14,19 +50,7 @@
   "expiresIn": "Secret will self-destruct in {time}",
   "back": "Back",
   "protectionType": "How do you want to protect your secret?",
-  "passwordOption": "🔑 Password",
-  "gameOption": "🎮 Mini-game",
-  "riddleOption": "🤔 Riddle",
-  "passwordLabel": "Choose a password",
-  "passwordPlaceholder": "Enter password...",
-  "passwordDescription": "Simple and secure - protect your secret with a password",
-  "riddleLabel": "Create a riddle",
-  "riddlePlaceholder": "Write your riddle...",
   "answerLabel": "Correct answer",
-  "answerPlaceholder": "Enter the answer...",
-  "gameDescriptionCreation": "The recipient will need to win a Memory game to see the secret",
-  "riddleDescriptionCreation": "The recipient will need to solve your riddle to see the secret",
-  "gameDescriptionChallenge": "You'll need to win a Memory game to see the secret",
   "riddleDescription": "Solve this riddle to unlock the secret",
   "continueButton": "Continue",
   "backToOptions": "Back to options",
@@ -41,8 +65,6 @@
   "solveRiddle": "Time for a riddle!",
   "riddleAnswerPlaceholder": "Your answer...",
   "checkAnswer": "Check answer",
-  "playToUnlock": "Play to unlock the secret",
-  "startGame": "Start game",
   "moves": "Moves",
   "pairs": "Pairs"
 }

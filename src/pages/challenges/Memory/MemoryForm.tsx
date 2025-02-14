@@ -1,17 +1,16 @@
 import React from 'react'
-import { useTranslation } from '../../../../hooks/useTranslation'
-import { useAppDispatch, useAppSelector } from '../../../../hooks'
-import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/secretSlice'
-import { SecretService } from '../../../../services/api'
-import { SLButton } from '../../../../components/SLButton'
-import styles from '../ProtectionDetails.module.scss'
+import { useAppDispatch, useAppSelector, useTranslation } from '../../../hooks'
+import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../store/secretSlice'
+import { SecretService } from '../../../services/api'
+import { SLButton } from '../../../components'
+import styles from '../ChallengeForm.module.scss'
 
-interface GameFormProps {
+interface MemoryFormProps {
   onBack: () => void
 }
 
-export const GameForm: React.FC<GameFormProps> = ({ onBack }) => {
-  const t = useTranslation()
+export const MemoryForm: React.FC<MemoryFormProps> = ({ onBack }) => {
+  const { backToOptions, sendingButton, generateButton, challenges: { memory: memoryText } } = useTranslation()
   const dispatch = useAppDispatch()
   const { content, loading } = useAppSelector(state => state.secret)
 
@@ -22,7 +21,7 @@ export const GameForm: React.FC<GameFormProps> = ({ onBack }) => {
     const gameConfig = JSON.stringify({ type: 'memory', pairs: 6 })
     const { data, error } = await SecretService.createMessage(
       content,
-      'game',
+      'memory',
       gameConfig,
     )
 
@@ -41,19 +40,19 @@ export const GameForm: React.FC<GameFormProps> = ({ onBack }) => {
   return (
     <>
       <button onClick={onBack} className={styles.backButton}>
-        {t.backToOptions}
+        {backToOptions}
       </button>
       <div className={styles.protectionForm}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <h2 className={styles.formTitle}>{t.gameOption}</h2>
-          <p className={styles.formDescription}>{t.gameDescriptionCreation}</p>
+          <h2 className={styles.formTitle}>{memoryText.title}</h2>
+          <p className={styles.formDescription}>{memoryText.description}</p>
           <SLButton
             type="submit"
             disabled={loading}
             loading={loading}
             center
           >
-            {loading ? t.sendingButton : t.generateButton}
+            {loading ? sendingButton : generateButton}
           </SLButton>
         </form>
       </div>

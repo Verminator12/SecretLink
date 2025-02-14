@@ -30,6 +30,13 @@ export default tseslint.config(
       'react-hooks/exhaustive-deps': 'off',
       '@stylistic/brace-style': ['error', "1tbs"],
       "no-unused-vars": "off",
+      "@stylistic/max-len": ["error", {
+        "code": 140,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true,
+        "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
+      }],
       '@typescript-eslint/no-unused-vars': [
         'error', {
         "args": "all",

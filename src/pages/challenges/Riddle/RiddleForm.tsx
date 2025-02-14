@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
-import { useTranslation } from '../../../../hooks/useTranslation'
-import { useAppDispatch, useAppSelector } from '../../../../hooks'
-import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../../store/secretSlice'
-import { SecretService } from '../../../../services/api'
-import { hashText } from '../../../../utils/crypto'
-import { SLButton } from '../../../../components/SLButton'
-import styles from '../ProtectionDetails.module.scss'
+import { useAppDispatch, useAppSelector, useTranslation } from '../../../hooks'
+import { SecretService } from '../../../services/api'
+import { SLButton } from '../../../components'
+import styles from '../ChallengeForm.module.scss'
+import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../store/secretSlice'
+import { hashText } from '../../../utils/crypto'
 
 interface RiddleFormProps {
   onBack: () => void
 }
 
 export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
-  const t = useTranslation()
+  const { backToOptions, sendingButton, generateButton, challenges: { riddle: riddleText } } = useTranslation()
   const dispatch = useAppDispatch()
   const { content, loading } = useAppSelector(state => state.secret)
   const [riddle, setRiddle] = useState('')
@@ -49,16 +48,16 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
   return (
     <>
       <button onClick={onBack} className={styles.backButton}>
-        {t.backToOptions}
+        {backToOptions}
       </button>
       <div className={styles.protectionForm}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <h2 className={styles.formTitle}>{t.riddleLabel}</h2>
+          <h2 className={styles.formTitle}>{riddleText.form.label}</h2>
           <div className={styles.inputGroup}>
             <textarea
               value={riddle}
               onChange={e => setRiddle(e.target.value)}
-              placeholder={t.riddlePlaceholder}
+              placeholder={riddleText.form.placeholder}
               className={`${styles.input} ${styles.textarea}`}
               disabled={loading}
               rows={4}
@@ -69,7 +68,7 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
               type="text"
               value={answer}
               onChange={e => setAnswer(e.target.value)}
-              placeholder={t.answerPlaceholder}
+              placeholder={riddleText.form.answerPlaceholder}
               className={styles.input}
               disabled={loading}
             />
@@ -80,7 +79,7 @@ export const RiddleForm: React.FC<RiddleFormProps> = ({ onBack }) => {
             loading={loading}
             center
           >
-            {loading ? t.sendingButton : t.generateButton}
+            {loading ? sendingButton : generateButton}
           </SLButton>
         </form>
       </div>

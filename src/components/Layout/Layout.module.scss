@@ -1,0 +1,35 @@
+@use "sass:math";
+@use "sass:color";
+@use "../../styles/animations";
+@use "../../styles/variables" as *;
+
+.container {
+  min-height: 100vh;
+  background-color: $background-color;
+}
+
+.content {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+
+  .title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: $text-color;
+    margin-bottom: 0.25rem;
+  }
+
+  .slogan {
+    font-size: 1rem;
+    color: adjust-color($text-color, 20%);
+    font-style: italic;
+  }
+}

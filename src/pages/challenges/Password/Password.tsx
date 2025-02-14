@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import { useTranslation } from '../../../hooks'
 import { hashText } from '../../../utils/crypto'
 import { AnimatedLock } from './AnimatedLock'
-import { SLButton } from '../../../components/SLButton'
-import type { Secret } from '../../../types'
+import { SLButton } from '../../../components'
 import styles from './Password.module.scss'
 
 interface PasswordProps {
-  message: Secret
+  parameters: string
   onComplete: () => void
 }
 
 export const Password: React.FC<PasswordProps> = ({
-  message,
+  parameters,
   onComplete,
 }) => {
   const t = useTranslation()
@@ -23,7 +22,7 @@ export const Password: React.FC<PasswordProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const hashedPassword = await hashText(password)
-    if (hashedPassword === message.protection_data) {
+    if (hashedPassword === parameters) {
       setIsUnlocking(true)
       setTimeout(() => {
         onComplete()
@@ -45,7 +44,7 @@ export const Password: React.FC<PasswordProps> = ({
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          placeholder={t.passwordPlaceholder}
+          placeholder={t.challenges.password.form.placeholder}
           className={styles.input}
           disabled={isUnlocking}
         />

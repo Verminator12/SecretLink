@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   color: $primary-color;
-  
+
   &:hover {
     color: adjust-color($primary-color, -10%);
   }
@@ -26,44 +26,6 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
-
-  .option {
-    flex: 1;
-    padding: 1.5rem;
-    background-color: white;
-    border: 2px solid $border-color;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-
-    &:hover {
-      border-color: adjust-color($primary-color, 20%);
-      transform: translateY(-2px);
-    }
-
-    &.selected {
-      border-color: $primary-color;
-      background-color: adjust-color($primary-color, 35%);
-    }
-
-    .optionTitle {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: $text-color;
-    }
-
-    .optionDescription {
-      color: adjust-color($text-color, 20%);
-      font-size: 0.875rem;
-    }
-  }
-}
-
-.form {
-  display: flex;
-  justify-content: center;
 }
 
 .button {

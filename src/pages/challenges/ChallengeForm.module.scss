@@ -1,4 +1,4 @@
-@use "../../../styles/variables" as *;
+@use "../../styles/variables" as *;
 
 .backButton {
   background: none;
@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   color: $primary-color;
-  
+
   &:hover {
     color: adjust-color($primary-color, -10%);
   }

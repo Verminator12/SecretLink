@@ -1,8 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../../hooks'
-import { PasswordForm } from './forms/PasswordForm'
-import { GameForm } from './forms/GameForm'
-import { RiddleForm } from './forms/RiddleForm'
+import { RiddleForm, PasswordForm, MemoryForm, MinesweeperForm } from '../../challenges'
 
 interface ProtectionDetailsProps {
   onBack: () => void
@@ -14,10 +12,12 @@ export const ProtectionDetails: React.FC<ProtectionDetailsProps> = ({ onBack }) 
   switch (protectionType) {
     case 'password':
       return <PasswordForm onBack={onBack} />
-    case 'game':
-      return <GameForm onBack={onBack} />
+    case 'memory':
+      return <MemoryForm onBack={onBack} />
     case 'riddle':
       return <RiddleForm onBack={onBack} />
+    case 'minesweeper':
+      return <MinesweeperForm onBack={onBack} />
     default:
       return null
   }

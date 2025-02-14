@@ -3,7 +3,7 @@ import { LuCopy, LuCheck } from 'react-icons/lu'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppSelector } from '../../../hooks'
 import styles from './CompleteStep.module.scss'
-import { SLButton } from '../../../components/SLButton'
+import { SLButton } from '../../../components'
 
 interface CompleteStepProps {
   onRestart: () => void

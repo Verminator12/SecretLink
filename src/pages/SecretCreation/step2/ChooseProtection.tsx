@@ -1,17 +1,23 @@
 import React from 'react'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { setProtectionType } from '../../../store/secretSlice'
 import styles from './ChooseProtection.module.scss'
-import { SLButton } from '../../../components/SLButton'
+import { ChallengeCard } from '../../challenges'
+import { ProtectionType } from '../../../types'
+import { setProtectionType } from '../../../store/secretSlice'
 
 interface ChooseProtectionProps {
-  onSubmit: (e: React.FormEvent) => void
   onBack: () => void
 }
 
+const challenges: ProtectionType[] = [
+  'password',
+  'memory',
+  'riddle',
+  // 'minesweeper'
+]
+
 export const ChooseProtection: React.FC<ChooseProtectionProps> = ({
-  onSubmit,
   onBack,
 }) => {
   const t = useTranslation()
@@ -25,36 +31,18 @@ export const ChooseProtection: React.FC<ChooseProtectionProps> = ({
       </button>
       <h2 className={styles.formTitle}>{t.protectionType}</h2>
       <div className={styles.protectionOptions}>
-        <button
-          className={`${styles.option} ${protectionType === 'password' ? styles.selected : ''}`}
-          onClick={() => dispatch(setProtectionType('password'))}
-        >
-          <h3 className={styles.optionTitle}>{t.passwordOption}</h3>
-          <p className={styles.optionDescription}>{t.passwordDescription}</p>
-        </button>
-        <button
-          className={`${styles.option} ${protectionType === 'game' ? styles.selected : ''}`}
-          onClick={() => dispatch(setProtectionType('game'))}
-        >
-          <h3 className={styles.optionTitle}>{t.gameOption}</h3>
-          <p className={styles.optionDescription}>{t.gameDescriptionCreation}</p>
-        </button>
-        <button
-          className={`${styles.option} ${protectionType === 'riddle' ? styles.selected : ''}`}
-          onClick={() => dispatch(setProtectionType('riddle'))}
-        >
-          <h3 className={styles.optionTitle}>{t.riddleOption}</h3>
-          <p className={styles.optionDescription}>{t.riddleDescriptionCreation}</p>
-        </button>
+        {challenges.map((name) => {
+          return (
+            <ChallengeCard
+              key={name}
+              title={t.challenges[name].title}
+              description={t.challenges[name].description}
+              selected={protectionType === name}
+              onClick={() => dispatch(setProtectionType(name))}
+            />
+          )
+        })}
       </div>
-      <form onSubmit={onSubmit} className={styles.form}>
-        <SLButton
-          type="submit"
-          disabled={!protectionType}
-        >
-          {t.continueButton}
-        </SLButton>
-      </form>
     </>
   )
 }

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { LuGamepad2 } from 'react-icons/lu'
-import type { Secret } from '../../../types'
-import { SLButton } from '../../../components/SLButton'
 import styles from './Memory.module.scss'
+import { useTranslation } from '../../../hooks'
+import { BeforeGame } from '../BeforeGame/BeforeGame'
 
 interface MemoryProps {
-  message: Secret
+  parameters: string
   onComplete: () => void
-  t: Record<string, string>
 }
 
 type Card = {
@@ -19,10 +17,8 @@ type Card = {
 
 const EMOJIS = ['🎮', '🎲', '🎯', '🎨', '🎭', '🎪']
 
-export const Memory: React.FC<MemoryProps> = ({
-  onComplete,
-  t,
-}) => {
+export const Memory: React.FC<MemoryProps> = ({ parameters: _parameters, onComplete }) => {
+  const t = useTranslation()
   const [isPlaying, setIsPlaying] = useState(false)
   const [cards, setCards] = useState<Card[]>([])
   const [flippedCards, setFlippedCards] = useState<string[]>([])
@@ -105,21 +101,7 @@ export const Memory: React.FC<MemoryProps> = ({
 
   if (!isPlaying) {
     return (
-      <div className={styles.gameChallenge}>
-        <div className={styles.iconContainer}>
-          <LuGamepad2 className={styles.icon} />
-        </div>
-        <h2 className={styles.title}>{t.playToUnlock}</h2>
-        <p className={styles.description}>{t.gameDescriptionChallenge}</p>
-        <SLButton
-          onClick={() => setIsPlaying(true)}
-          variant="game"
-          type="button"
-          center
-        >
-          {t.startGame}
-        </SLButton>
-      </div>
+      <BeforeGame gameName={t.challenges.memory.gameName} onPlay={() => setIsPlaying(true)} />
     )
   }
 

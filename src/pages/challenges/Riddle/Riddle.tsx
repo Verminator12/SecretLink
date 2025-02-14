@@ -1,30 +1,25 @@
 import React, { useState } from 'react'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { hashText } from '../../../utils/crypto'
-import { SLButton } from '../../../components/SLButton'
-import type { Secret } from '../../../types'
+import { SLButton } from '../../../components'
 import styles from './Riddle.module.scss'
 
 interface RiddleProps {
-  message: Secret
+  parameters: string
   onComplete: () => void
 }
 
-export const Riddle: React.FC<RiddleProps> = ({
-  message,
-  onComplete,
-}) => {
+export const Riddle: React.FC<RiddleProps> = ({ parameters, onComplete }) => {
   const t = useTranslation()
   const [answer, setAnswer] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const [isUnlocking, setIsUnlocking] = useState(false)
   const [isSolved, setIsSolved] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
-      const protection = JSON.parse(message.protection_data || '{}')
+      const protection = JSON.parse(parameters || '{}')
 
       if (!protection.riddle || !protection.answer) {
         throw new Error('Invalid riddle data')
@@ -33,7 +28,6 @@ export const Riddle: React.FC<RiddleProps> = ({
       const hashedAnswer = await hashText(answer.toLowerCase().trim())
 
       if (hashedAnswer === protection.answer) {
-        setIsUnlocking(true)
         setIsSolved(true)
         setTimeout(() => {
           onComplete()
@@ -50,7 +44,7 @@ export const Riddle: React.FC<RiddleProps> = ({
 
   let riddleText = ''
   try {
-    const protection = JSON.parse(message.protection_data || '{}')
+    const protection = JSON.parse(parameters || '{}')
     riddleText = protection.riddle || ''
   } catch (err) {
     console.error('Error parsing riddle text:', err)
@@ -83,11 +77,11 @@ export const Riddle: React.FC<RiddleProps> = ({
             onChange={e => setAnswer(e.target.value)}
             placeholder={t.riddleAnswerPlaceholder}
             className={styles.input}
-            disabled={isUnlocking}
+            disabled={isSolved}
           />
           {error && <p className={styles.error}>{error}</p>}
         </div>
-        <SLButton type="submit" disabled={!answer.trim() || isUnlocking} loading={isUnlocking} center>
+        <SLButton type="submit" disabled={!answer.trim() || isSolved} loading={isSolved} center>
           {t.checkAnswer}
         </SLButton>
       </form>

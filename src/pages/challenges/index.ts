@@ -1,3 +1,5 @@
 export * from './Memory'
 export * from './Password'
 export * from './Riddle'
+export * from './Minesweeper'
+export * from './ChallengeCard'

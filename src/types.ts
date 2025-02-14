@@ -3,9 +3,9 @@ export interface Secret {
   content: string
   created_at: string
   expiration_date: string
-  slug?: string
-  protection_type?: 'password' | 'game' | 'riddle'
-  protection_data?: string // password hash or game/riddle configuration
+  slug: string
+  protection_type: 'password' | 'memory' | 'riddle' | 'minesweeper'
+  protection_data: string
 }
 
-export type ProtectionType = 'password' | 'game' | 'riddle'
+export type ProtectionType = 'password' | 'memory' | 'riddle' | 'minesweeper'
