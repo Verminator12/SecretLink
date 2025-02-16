@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { LuClock } from 'react-icons/lu'
 import { SecretService } from '../../services/api'
 import { Password, Memory, Riddle, Minesweeper } from '../challenges'
@@ -144,7 +144,7 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
     ))
   }
 
-  const messageComponent = isUnlocked
+  const messageComponent = useMemo(() => isUnlocked
     ? (
         <>
           <div className={styles.messageCard}>
@@ -161,21 +161,23 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
         <div className={styles.challenge}>
           {renderChallenge()}
         </div>
-      )
+      ), [isUnlocked, message])
 
   return (
     <div>
       {showConfetti && renderConfetti()}
       {isUnlocked && <div className={styles.successOverlay} />}
 
-      {total !== null && total > 0 && message && (
+      {message && (
         <div className={styles.expirationTimer}>
           <LuClock className={styles.clockIcon} />
           <span className={styles.timerText}>
-            {t.expiresIn.replace(
-              '{time}',
-              `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`,
-            )}
+            {(total === null
+              ? t.expirationCalculating
+              : t.expiresIn.replace(
+                  '{time}',
+                  total === null ? t.expirationCalculating : `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`,
+                ))}
           </span>
         </div>
       )}

@@ -31,7 +31,8 @@
     "minesweeper": {
       "title": "🚩 Minesweeper",
       "gameName": "Minesweeper",
-      "description": "The recipient will need to clear the board without hitting a mine to unlock the secret"
+      "description": "The recipient will need to clear the board without hitting a mine to unlock the secret",
+      "retry": "Retry"
     }
   },
   "beforeGame": {
@@ -48,6 +49,7 @@
   "secretNotFound": "Secret not found 😥",
   "secretExpired": "This secret has self-destructed 😥",
   "expiresIn": "Secret will self-destruct in {time}",
+  "expirationCalculating": "Calculating self-destruct time...",
   "back": "Back",
   "protectionType": "How do you want to protect your secret?",
   "answerLabel": "Correct answer",

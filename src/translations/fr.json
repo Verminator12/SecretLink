@@ -31,7 +31,8 @@
     "minesweeper": {
       "title": "🚩 Démineur",
       "gameName": "Démineur",
-      "description": "Le destinataire devra déminer le terrain sans toucher de mine pour déverrouiller ton secret"
+      "description": "Le destinataire devra déminer le terrain sans toucher de mine pour déverrouiller ton secret",
+      "retry": "Recommencer"
     }
   },
   "beforeGame": {
@@ -48,6 +49,7 @@
   "secretNotFound": "Secret introuvable 😥",
   "secretExpired": "Ce secret s'est auto-détruit 😥",
   "expiresIn": "Le secret s'auto-détruira dans {time}",
+  "expirationCalculating": "Temps avant auto-destruction en cours de calcul...",
   "back": "Retour",
   "protectionType": "Comment veux-tu protéger ton secret ?",
   "answerLabel": "Réponse correcte",
