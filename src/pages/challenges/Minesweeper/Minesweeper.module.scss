@@ -1,22 +1,21 @@
 @use "../../../styles/variables" as *;
 
 .game {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+
   .gameHeader {
     display: flex;
     justify-content: center;
     gap: 2rem;
-    margin-bottom: 1.5rem;
 
     .stat {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.25rem;
-
-      .label {
-        font-size: 0.875rem;
-        color: adjust-color($text-color, 20%);
-      }
 
       .value {
         font-size: 1.25rem;
@@ -26,73 +25,17 @@
     }
   }
 
-  .grid {
+  .board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    perspective: 1000px;
-    max-width: 480px;
     margin: 0 auto;
+    background-color: gray;
+    padding: 3px;
+    gap: 3px;
   }
+}
 
-  .card {
-    aspect-ratio: 1;
-    position: relative;
-    cursor: pointer;
-    border: none;
-    padding: 0;
-    background: none;
-    width: 100%;
-
-    &:focus {
-      outline: none;
-    }
-
-    .cardInner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-      border-radius: 0.75rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    &.flipped .cardInner {
-      transform: rotateY(180deg);
-    }
-
-    .cardFront,
-    .cardBack {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cardFront {
-      background: linear-gradient(
-        135deg,
-        adjust-color($primary-color, 35%) 0%,
-        adjust-color($primary-color, 30%) 100%
-      );
-      border: 2px solid adjust-color($primary-color, 25%);
-    }
-
-    .cardBack {
-      background-color: white;
-      transform: rotateY(180deg);
-      border: 2px solid $border-color;
-    }
-
-    .emoji {
-      font-size: 2.5rem;
-      line-height: 1;
-    }
-  }
+.prevent_text_selection {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }

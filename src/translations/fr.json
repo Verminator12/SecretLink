@@ -32,6 +32,7 @@
       "title": "🚩 Démineur",
       "gameName": "Démineur",
       "description": "Le destinataire devra déminer le terrain sans toucher de mine pour déverrouiller ton secret",
+      "minesTotal": "Mines : {mines}",
       "retry": "Recommencer"
     }
   },

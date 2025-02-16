@@ -1,0 +1,35 @@
+@use "../../../../styles/variables" as *;
+
+.cell {
+  border: none;
+}
+
+.small {
+  font-weight: bold;
+  font-size: medium;
+  width: 26px;
+  height: 26px;
+}
+
+.large {
+  font-weight: bold;
+  font-size: larger;
+  width: 40px;
+  height: 40px;
+}
+
+.hidden {
+  background-color: darkgray;
+}
+
+.visible {
+  background-color: lightgray;
+}
+
+.mine {
+  background-color: crimson;
+}
+
+.flagged {
+  background-color: darkgray;
+}

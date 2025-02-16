@@ -32,6 +32,7 @@
       "title": "🚩 Minesweeper",
       "gameName": "Minesweeper",
       "description": "The recipient will need to clear the board without hitting a mine to unlock the secret",
+      "minesTotal": "Mines: {mines}",
       "retry": "Retry"
     }
   },
