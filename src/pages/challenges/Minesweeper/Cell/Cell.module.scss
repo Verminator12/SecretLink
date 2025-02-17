@@ -1,14 +1,14 @@
 @use "../../../../styles/variables" as *;
 
 .cell {
-  border: none;
+  border: 1px solid gray;
 }
 
 .small {
   font-weight: bold;
   font-size: medium;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 }
 
 .large {

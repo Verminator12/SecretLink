@@ -10,7 +10,7 @@ type CellProps = {
   onToggleFlag: () => void
 }
 
-const colorsByMinesAround = ['', 'blue', 'green', 'crimson', 'purple', 'maroon', 'turquoise', 'black', 'gray']
+const colorsByMinesAround = ['', 'blue', 'green', 'crimson', 'purple', 'maroon', 'dodgerblue', 'black', 'gray']
 
 export const MinesweeperCell: React.FC<CellProps> = ({ cell, minesAround, size, onClick, onToggleFlag }) => {
   const icon = cell.isMine ? '💣' : `${minesAround > 0 ? minesAround : ''}`

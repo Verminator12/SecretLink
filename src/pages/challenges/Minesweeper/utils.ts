@@ -1,5 +1,11 @@
 import { Cell, CellState } from './Cell'
 
+export const difficulty = {
+  easy: { rows: 9, cols: 9, mines: 10 },
+  medium: { rows: 16, cols: 16, mines: 40 },
+  hard: { rows: 16, cols: 30, mines: 99 },
+}
+
 export const surroundingCellsPositions = (row: number, col: number) => [
   [row - 1, col - 1], [row - 1, col], [row - 1, col + 1], // above row
   [row, col - 1], [row, col + 1], // same row
@@ -51,4 +57,16 @@ export const shuffle2DArray = <T>(array: T[][]) => {
   }
 
   return shuffledArray
+}
+
+export const getBoardParameters = (parameters: string) => {
+  try {
+    const protection = JSON.parse(parameters || '{}')
+    const level = protection.difficulty as keyof typeof difficulty
+
+    return difficulty[level] || difficulty.easy
+  } catch (err) {
+    console.error('Error parsing difficulty:', err)
+    return difficulty.easy
+  }
 }

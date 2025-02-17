@@ -4,45 +4,27 @@ import { useTranslation } from '../../../hooks'
 import { BeforeGame } from '../BeforeGame/BeforeGame'
 import { MinesweeperCell, type Cell, CellState } from './Cell'
 import { SLButton } from '../../../components'
-import { getSurroundingMinesAndFlags, isCellOutOfBounds, shuffle2DArray, surroundingCellsPositions } from './utils'
+import { difficulty, getBoardParameters, getSurroundingMinesAndFlags, isCellOutOfBounds, shuffle2DArray, surroundingCellsPositions } from './utils'
 
 type MinesweeperProps = {
   parameters: string
   onComplete: () => void
 }
 
-const difficulty = {
-  easy: { rows: 9, cols: 9, mines: 10 },
-  medium: { rows: 16, cols: 16, mines: 40 },
-  hard: { rows: 16, cols: 30, mines: 99 },
-}
-
 export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete }) => {
   const { gameName, retry, minesTotal } = useTranslation().challenges.minesweeper
 
   const [isPlaying, setIsPlaying] = useState(false)
-  const [gameOver, setGameOver] = useState(false)
-  const [mines, setMines] = useState<number | null>(null)
+  const [isGameOver, setGameOver] = useState(false)
+
   const [board, setBoard] = useState<Cell[][]>([])
-
-  const getDifficulty = () => {
-    try {
-      const protection = JSON.parse(parameters || '{}')
-      const level = protection.difficulty as keyof typeof difficulty
-
-      return difficulty[level] || difficulty.easy
-    } catch (err) {
-      console.error('Error parsing difficulty:', err)
-      return difficulty.easy
-    }
-  }
+  const { rows, cols, mines } = getBoardParameters(parameters)
+  const [score, setScore] = useState(mines)
 
   const initializeGame = () => {
-    const { rows, cols, mines } = getDifficulty()
     let placedMines = 0
 
     setGameOver(false)
-    setMines(mines)
 
     const newBoard = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, (): Cell => {
@@ -57,6 +39,42 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
     setBoard(shuffle2DArray(newBoard))
   }
 
+  const revealMines = () => {
+    const newBoard = board.map(row => row.map(cell =>
+      cell.isMine && cell.state === CellState.HIDDEN ? { ...cell, state: CellState.VISIBLE } : cell))
+    setBoard(newBoard)
+  }
+
+  const revealSurroundingCells = (row: number, col: number) => {
+    surroundingCellsPositions(row, col).forEach(([r, c]) => {
+      // check for out of bounds
+      if (isCellOutOfBounds(r, c, board)) {
+        return
+      }
+
+      // visible and flagged cells can't be revealed
+      if (board[r][c].state !== CellState.HIDDEN) {
+        return
+      }
+
+      const newBoard = [...board]
+
+      newBoard[r][c].state = CellState.VISIBLE
+      setBoard(newBoard)
+
+      if (board[r][c].isMine) {
+        setGameOver(true)
+      }
+
+      const { minesAround } = getSurroundingMinesAndFlags(r, c, board)
+
+      // check for empty surrounding cells and reveal them
+      if (minesAround === 0) {
+        revealSurroundingCells(r, c)
+      }
+    })
+  }
+
   const onMiddleClick = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
 
@@ -68,103 +86,47 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
   }
 
   const onCellRightClick = (row: number, col: number) => {
-    if (gameOver || board[row][col].state === CellState.VISIBLE) {
+    const cellState = board[row][col].state
+
+    if (isGameOver || cellState === CellState.VISIBLE) {
       return
     }
 
     const newBoard = [...board]
 
-    if (board[row][col].state === CellState.FLAGGED) {
-      setMines(mines !== null ? mines + 1 : null)
+    if (cellState === CellState.FLAGGED) {
       newBoard[row][col].state = CellState.HIDDEN
+      setScore(score + 1)
     } else {
-      setMines(mines !== null ? mines - 1 : null)
       newBoard[row][col].state = CellState.FLAGGED
+      setScore(score - 1)
     }
-    setBoard(newBoard)
-  }
 
-  const revealBoard = () => {
-    const newBoard = board.map(row => row.map(cell => cell.isMine ? { ...cell, state: CellState.VISIBLE } : cell))
     setBoard(newBoard)
   }
 
   const onCellClick = (row: number, col: number) => {
-    if (gameOver) {
+    const { minesAround, flagsAround } = getSurroundingMinesAndFlags(row, col, board)
+    const isChordValid = board[row][col].state === CellState.VISIBLE && minesAround > 0 && flagsAround === minesAround
+
+    if (isGameOver || board[row][col].state === CellState.FLAGGED) {
       return
     }
 
     if (board[row][col].isMine) {
-      revealBoard()
       setGameOver(true)
       return
     }
 
-    const { minesAround, flagsAround } = getSurroundingMinesAndFlags(row, col, board)
-    const newBoard = [...board]
-
-    if (board[row][col].state === CellState.FLAGGED) {
-      return
-    }
-
-    newBoard[row][col].state = CellState.VISIBLE
-
-    if (minesAround === 0) {
-      surroundingCellsPositions(row, col).forEach(([r, c]) => {
-        if (isCellOutOfBounds(r, c, board)) {
-          return
-        }
-
-        if (board[r][c].state === CellState.VISIBLE) {
-          return
-        }
-
-        const { minesAround: minesAroundCellToCheck } = getSurroundingMinesAndFlags(r, c, board)
-
-        newBoard[r][c].state = CellState.VISIBLE
-
-        // if cell has no mines around it, recursively reveal surrounding cells
-        if (minesAroundCellToCheck === 0) {
-          onCellClick(r, c)
-          return
-        }
-      })
-    }
-
-    setBoard(newBoard)
-
-    // reveal surrounding of visible cells with the same number of surrounding mines and flags
-    if (board[row][col].state === CellState.VISIBLE && minesAround > 0 && flagsAround === minesAround) {
+    // reveal surrounding cells for valid chords and empty cells
+    if (minesAround === 0 || isChordValid) {
       revealSurroundingCells(row, col)
     }
-  }
 
-  const revealSurroundingCells = (row: number, col: number) => {
     const newBoard = [...board]
-    let revealedAMine = false
 
-    surroundingCellsPositions(row, col).forEach(([r, c]) => {
-      if (isCellOutOfBounds(r, c, board)) {
-        return
-      }
-
-      if (board[r][c].state !== CellState.HIDDEN) {
-        return
-      }
-
-      newBoard[r][c].state = CellState.VISIBLE
-
-      if (board[r][c].isMine) {
-        revealedAMine = true
-      }
-    })
-
+    newBoard[row][col].state = CellState.VISIBLE
     setBoard(newBoard)
-
-    if (revealedAMine) {
-      revealBoard()
-      setGameOver(true)
-    }
   }
 
   useEffect(() => {
@@ -178,6 +140,12 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
       onComplete()
     }
   }, [board])
+
+  useEffect(() => {
+    if (isGameOver) {
+      revealMines()
+    }
+  }, [isGameOver])
 
   useEffect(() => {
     if (isPlaying) {
@@ -223,7 +191,10 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
           })
         })}
       </div>
-      {gameOver && <SLButton onClick={() => initializeGame()}>{retry}</SLButton>}
+
+      <div className={styles.gameFooter}>
+        {isGameOver && <SLButton onClick={() => initializeGame()}>{retry}</SLButton>}
+      </div>
     </div>
   )
 }

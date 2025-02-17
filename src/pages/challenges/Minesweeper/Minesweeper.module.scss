@@ -25,12 +25,16 @@
     }
   }
 
+  .gameFooter {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
   .board {
     display: grid;
     margin: 0 auto;
-    background-color: gray;
-    padding: 3px;
-    gap: 3px;
+    border: 1px solid gray;
   }
 }
 
