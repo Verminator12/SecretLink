@@ -33,7 +33,13 @@
       "gameName": "Démineur",
       "description": "Le destinataire devra déminer le terrain sans toucher de mine pour déverrouiller ton secret",
       "minesTotal": "Mines : {mines}",
-      "retry": "Recommencer"
+      "retry": "Recommencer",
+      "difficulty": {
+        "easy": "Facile (9x9, 10 mines)",
+        "medium": "Moyen (16x16, 40 mines)",
+        "hard": "Difficile (16x30, 99 mines)",
+        "label": "Sélectionnes la difficulté"
+      }
     }
   },
   "beforeGame": {

@@ -55,6 +55,9 @@
     font-size: 1rem;
     transition: all 0.2s;
     font-family: inherit;
+    background-color: white;
+    appearance: none;
+    color: $text-color;
 
     &:focus {
       outline: none;
@@ -70,6 +73,20 @@
     &.textarea {
       resize: vertical;
       min-height: 100px;
+    }
+
+    &[type="select"],
+    &:is(select) {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-position: right 0.75rem center;
+      background-repeat: no-repeat;
+      background-size: 1.25rem;
+      padding-right: 2.5rem;
+
+      &:disabled {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      }
     }
   }
 }

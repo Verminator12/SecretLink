@@ -33,7 +33,13 @@
       "gameName": "Minesweeper",
       "description": "The recipient will need to clear the board without hitting a mine to unlock the secret",
       "minesTotal": "Mines: {mines}",
-      "retry": "Retry"
+      "retry": "Retry",
+      "difficulty": {
+        "easy": "Easy (9x9, 10 mines)",
+        "medium": "Medium (16x16, 40 mines)",
+        "hard": "Hard (16x30, 99 mines)",
+        "label": "Select difficulty"
+      }
     }
   },
   "beforeGame": {
