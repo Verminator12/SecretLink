@@ -25,6 +25,7 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
     let placedMines = 0
 
     setGameOver(false)
+    setScore(mines)
 
     const newBoard = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, (): Cell => {
@@ -87,9 +88,8 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
 
   const onCellRightClick = (row: number, col: number) => {
     const cellState = board[row][col].state
-    console.log('score1', score)
+
     if (isGameOver || cellState === CellState.VISIBLE) {
-      console.log('scorereturn', score)
       return
     }
 
@@ -97,11 +97,9 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
 
     if (cellState === CellState.FLAGGED) {
       newBoard[row][col].state = CellState.HIDDEN
-      console.log('score+', score)
       setScore(score + 1)
     } else {
       newBoard[row][col].state = CellState.FLAGGED
-      console.log('score-', score)
       setScore(score - 1)
     }
 
