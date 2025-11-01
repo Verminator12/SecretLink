@@ -11,8 +11,13 @@ export const WriteSecret: React.FC = () => {
   const [secret, setSecret] = useState('')
   const { loading } = useAppSelector(state => state.secret)
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    dispatch(setContent(secret))
+  }
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputGroup}>
         <input
           type="text"
@@ -22,7 +27,7 @@ export const WriteSecret: React.FC = () => {
           className={styles.input}
           disabled={loading}
         />
-        <SLButton disabled={loading || !secret.trim()} loading={loading} onClick={() => dispatch(setContent(secret))}>
+        <SLButton type="submit" disabled={loading || !secret.trim()} loading={loading}>
           {t.continueButton}
         </SLButton>
       </div>

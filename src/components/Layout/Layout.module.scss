@@ -5,31 +5,50 @@
 
 .container {
   min-height: 100vh;
-  background-color: $background-color;
-}
+  position: relative;
+  overflow: hidden;
 
-.content {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-
-  .title {
-    font-size: 1.875rem;
-    font-weight: bold;
-    color: $text-color;
-    margin-bottom: 0.25rem;
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1.5rem;
   }
 
-  .slogan {
-    font-size: 1rem;
-    color: adjust-color($text-color, 20%);
-    font-style: italic;
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+
+    .title {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: $text-color;
+      margin-bottom: 0.25rem;
+    }
+
+    .slogan {
+      font-size: 1rem;
+      color: adjust-color($text-color, 20%);
+      font-style: italic;
+    }
   }
+}
+
+.background-3d {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 210vh;
+  background-image: url('/background.svg');
+  background-size: cover;
+  background-position: calc(top - 200px);
+  background-repeat: no-repeat;
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  z-index: -1;
 }
