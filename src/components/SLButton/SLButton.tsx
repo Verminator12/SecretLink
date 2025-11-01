@@ -1,14 +1,14 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import styles from './SLButton.module.scss'
 
-interface SLButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type SLButtonProps = {
   loading?: boolean
   block?: boolean
   center?: boolean
   variant?: 'primary' | 'game'
   type: 'submit' | 'button'
   children: ReactNode
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const SLButton: FC<SLButtonProps> = ({
   loading,

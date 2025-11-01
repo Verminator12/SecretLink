@@ -2,7 +2,7 @@ import React from 'react'
 import { useAppSelector } from '../../../hooks'
 import { RiddleForm, PasswordForm, MemoryForm, MinesweeperForm } from '../../challenges'
 
-interface ProtectionDetailsProps {
+type ProtectionDetailsProps = {
   onBack: () => void
 }
 

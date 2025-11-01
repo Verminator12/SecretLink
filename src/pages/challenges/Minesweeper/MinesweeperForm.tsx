@@ -6,7 +6,7 @@ import { SLButton } from '../../../components'
 import { difficulty } from './utils'
 import styles from '../ChallengeForm.module.scss'
 
-interface MinesweeperProps {
+type MinesweeperProps = {
   onBack: () => void
 }
 

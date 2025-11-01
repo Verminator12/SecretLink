@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './AnimatedLock.module.scss'
 
-interface AnimatedLockProps {
+type AnimatedLockProps = {
   isUnlocking: boolean
 }
 

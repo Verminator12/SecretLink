@@ -6,7 +6,7 @@ import { ChallengeCard } from '../../challenges'
 import { ProtectionType } from '../../../types'
 import { setProtectionType } from '../../../store/secretSlice'
 
-interface ChooseProtectionProps {
+type ChooseProtectionProps = {
   onBack: () => void
 }
 

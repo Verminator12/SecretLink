@@ -4,7 +4,7 @@ import { hashText } from '../../../utils/crypto'
 import { SLButton } from '../../../components'
 import styles from './Riddle.module.scss'
 
-interface RiddleProps {
+type RiddleProps = {
   parameters: string
   onComplete: () => void
 }

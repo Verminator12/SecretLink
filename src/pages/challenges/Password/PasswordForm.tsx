@@ -7,7 +7,7 @@ import { hashText } from '../../../utils/crypto'
 import { SLButton } from '../../../components'
 import styles from '../ChallengeForm.module.scss'
 
-interface PasswordFormProps {
+type PasswordFormProps = {
   onBack: () => void
 }
 

@@ -5,7 +5,7 @@ import { AnimatedLock } from './AnimatedLock'
 import { SLButton } from '../../../components'
 import styles from './Password.module.scss'
 
-interface PasswordProps {
+type PasswordProps = {
   parameters: string
   onComplete: () => void
 }

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useRef } from 'react'
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import styles from './Layout.module.scss'
 import { useTranslation } from '../../hooks'
 
@@ -9,32 +9,64 @@ type LayoutProps = {
 export const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children, title }) => {
   const t = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
+  const [frame, setFrame] = useState<number | null>(null)
 
   const parallax = (event: MouseEvent) => {
-    // const _w = window.innerWidth / 2
-    // const _h = window.innerHeight / 2
-    // const _mouseX = event.clientX
-    // const _mouseY = event.clientY
-    // const _depth1 = `${50 - (_mouseX - _w) * 0.01}% ${50 - (_mouseY - _h) * 0.01}%`
-    // const _depth2 = `${50 - (_mouseX - _w) * 0.02}% ${50 - (_mouseY - _h) * 0.02}%`
-    // const _depth3 = `${50 - (_mouseX - _w) * 0.06}% ${50 - (_mouseY - _h) * 0.06}%`
-    // const x = `${_depth3}, ${_depth2}, ${_depth1}`
-
-    const x = (event.clientX / window.innerWidth - 0.5) * 2
-    const y = (event.clientY / window.innerHeight - 0.5) * 2
-
-    const rotateX = y * 20 // max 20deg up/down
-    const rotateY = -x * 20 // max 10deg left/right
-
-    if (ref.current) {
-      ref.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.2)`
-      // ref.current.style.backgroundPosition = x
+    if (frame) {
+      cancelAnimationFrame(frame)
     }
+
+    const animationFrame = requestAnimationFrame(() => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 2
+      const y = (event.clientY / window.innerHeight - 0.5) * 2
+
+      const rotateX = y * 20
+      const rotateY = -x * 20
+
+      if (ref.current) {
+        ref.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.2)`
+      }
+    })
+
+    setFrame(animationFrame)
+  }
+
+  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+    if (frame) {
+      cancelAnimationFrame(frame)
+    }
+
+    const animationFrame = requestAnimationFrame(() => {
+      const gamma = event.gamma ?? 0 // left/right tilt [-90, 90]
+      const beta = event.beta ?? 0 // front/back tilt [-180, 180]
+
+      // Normalize to -1 → 1
+      const x = gamma / 45
+      const y = beta / 45
+
+      const rotateX = y * 20
+      const rotateY = -x * 20
+
+      if (ref.current) {
+        ref.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.2)`
+      }
+    })
+
+    setFrame(animationFrame)
   }
 
   useEffect(() => {
     window.addEventListener('mousemove', parallax)
-    return () => window.removeEventListener('mousemove', parallax)
+    window.addEventListener('deviceorientation', handleDeviceOrientation, true)
+
+    return () => {
+      window.removeEventListener('mousemove', parallax)
+      window.removeEventListener('deviceorientation', handleDeviceOrientation, true)
+
+      if (frame) {
+        cancelAnimationFrame(frame)
+      }
+    }
   }, [])
 
   return (

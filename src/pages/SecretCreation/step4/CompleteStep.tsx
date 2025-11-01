@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../hooks'
 import styles from './CompleteStep.module.scss'
 import { SLButton } from '../../../components'
 
-interface CompleteStepProps {
+type CompleteStepProps = {
   onRestart: () => void
 }
 
@@ -32,6 +32,7 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({ onRestart }) => {
             {fullLink}
           </p>
           <SLButton
+            type="button"
             onClick={copyMessageLink}
             className={styles.copyButton}
             title={t.copyLink}
@@ -41,7 +42,7 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({ onRestart }) => {
           </SLButton>
         </div>
       </div>
-      <SLButton onClick={onRestart} className={styles.restartButton}>
+      <SLButton type="button" onClick={onRestart} className={styles.restartButton}>
         {t.createNewSecret}
       </SLButton>
     </div>

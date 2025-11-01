@@ -6,7 +6,7 @@ import styles from '../ChallengeForm.module.scss'
 import { setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../store/secretSlice'
 import { hashText } from '../../../utils/crypto'
 
-interface RiddleFormProps {
+type RiddleFormProps = {
   onBack: () => void
 }
 

@@ -1,4 +1,4 @@
-export interface Secret {
+export type Secret = {
   id: string
   content: string
   created_at: string

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { LuClock } from 'react-icons/lu'
 import { SecretService } from '../../services/api'
 import { Password, Memory, Riddle, Minesweeper } from '../challenges'
@@ -10,31 +10,36 @@ import styles from './SecretReveal.module.scss'
 import { setCurrentSlug } from '../../store/secretSlice'
 import { useAppDispatch } from '../../hooks'
 
-interface SecretRevealProps {
+type SecretRevealProps = {
   slug: string
 }
 
 export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
   const t = useTranslation()
   const dispatch = useAppDispatch()
+
+  const [now] = useState<number>(() => Date.now())
   const [message, setMessage] = useState<Secret | null>(null)
   const [expirationDate, setExpirationDate] = useState<Date | null>(null)
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   const [isFadingOut, setIsFadingOut] = useState(false)
 
   const { hours, minutes, seconds, total } = useCountdown(expirationDate)
 
-  const handleMessageExpiration = useCallback(async (messageId: string) => {
+  const handleMessageExpiration = async (messageId: string) => {
     setError(t.secretExpired)
+
     try {
       await SecretService.deleteMessage(messageId)
     } catch (err) {
       console.error('Error deleting expired message:', err)
     }
-  }, [t])
+  }
 
   const onBack = () => {
     dispatch(setCurrentSlug(null))
@@ -50,7 +55,7 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
       const expDate = new Date(data.expiration_date)
       setExpirationDate(expDate)
 
-      if (expDate.getTime() <= Date.now()) {
+      if (expDate.getTime() <= now) {
         await handleMessageExpiration(data.id)
       } else {
         setMessage(data)
@@ -60,15 +65,13 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
     setLoading(false)
   }
 
-  useEffect(() => {
+  if (!expirationDate) {
     fetchMessage()
-  }, [slug, t, handleMessageExpiration])
+  }
 
-  useEffect(() => {
-    if (total === 0 && message?.id) {
-      handleMessageExpiration(message.id)
-    }
-  }, [total, message, handleMessageExpiration])
+  if (total === 0 && message?.id && !error) {
+    handleMessageExpiration(message.id)
+  }
 
   // Handle confetti cleanup with fade out
   useEffect(() => {
@@ -161,7 +164,7 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
         <div className={styles.challenge}>
           {renderChallenge()}
         </div>
-      ), [isUnlocked, message])
+      ), [isUnlocked, message, onBack, t, renderChallenge])
 
   return (
     <div>

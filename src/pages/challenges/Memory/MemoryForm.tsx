@@ -5,7 +5,7 @@ import { SecretService } from '../../../services/api'
 import { SLButton } from '../../../components'
 import styles from '../ChallengeForm.module.scss'
 
-interface MemoryFormProps {
+type MemoryFormProps = {
   onBack: () => void
 }
 

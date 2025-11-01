@@ -22,7 +22,7 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      ...stylistic.configs['recommended-flat'].rules,
+      ...stylistic.configs['recommended'].rules,
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true }

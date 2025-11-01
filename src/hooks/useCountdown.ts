@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react'
 
-interface TimeRemaining {
+type TimeRemaining = {
   hours: number
   minutes: number
   seconds: number
   total: number | null
 }
 
-export function useCountdown(targetDate: Date | null): TimeRemaining {
-  const calculateTimeRemaining = (): TimeRemaining => {
+const defaultTimeRemaining: TimeRemaining = { hours: 0, minutes: 0, seconds: 0, total: null }
+
+export const useCountdown = (targetDate: Date | null): TimeRemaining => {
+  const calculateTimeRemaining = (now: number): TimeRemaining => {
     if (targetDate === null) {
-      return { hours: 0, minutes: 0, seconds: 0, total: null }
+      return defaultTimeRemaining
     }
-    const total = new Date(targetDate).getTime() - Date.now()
+    const total = new Date(targetDate).getTime() - now
 
     if (total <= 0) {
       return { hours: 0, minutes: 0, seconds: 0, total: 0 }
@@ -25,11 +27,11 @@ export function useCountdown(targetDate: Date | null): TimeRemaining {
     return { hours, minutes, seconds, total }
   }
 
-  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>(calculateTimeRemaining())
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>(defaultTimeRemaining)
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeRemaining(calculateTimeRemaining())
+      setTimeRemaining(calculateTimeRemaining(Date.now()))
     }, 1000)
 
     return () => clearInterval(timer)

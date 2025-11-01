@@ -194,7 +194,7 @@ export const Minesweeper: React.FC<MinesweeperProps> = ({ parameters, onComplete
       </div>
 
       <div className={styles.gameFooter}>
-        {isGameOver && <SLButton onClick={() => initializeGame()}>{retry}</SLButton>}
+        {isGameOver && <SLButton type="button" onClick={() => initializeGame()}>{retry}</SLButton>}
       </div>
     </div>
   )

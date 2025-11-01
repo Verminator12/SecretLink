@@ -3,7 +3,7 @@ import styles from './Memory.module.scss'
 import { useTranslation } from '../../../hooks'
 import { BeforeGame } from '../BeforeGame/BeforeGame'
 
-interface MemoryProps {
+type MemoryProps = {
   parameters: string
   onComplete: () => void
 }
@@ -24,20 +24,6 @@ export const Memory: React.FC<MemoryProps> = ({ parameters: _parameters, onCompl
   const [flippedCards, setFlippedCards] = useState<string[]>([])
   const [matchedPairs, setMatchedPairs] = useState(0)
   const [moves, setMoves] = useState(0)
-
-  useEffect(() => {
-    if (isPlaying) {
-      initializeGame()
-    }
-  }, [isPlaying])
-
-  useEffect(() => {
-    if (matchedPairs === 6) {
-      setTimeout(() => {
-        onComplete()
-      }, 1000)
-    }
-  }, [matchedPairs, onComplete])
 
   const initializeGame = () => {
     const cardPairs = EMOJIS.flatMap(emoji =>
@@ -99,9 +85,23 @@ export const Memory: React.FC<MemoryProps> = ({ parameters: _parameters, onCompl
     }
   }
 
+  useEffect(() => {
+    if (matchedPairs === 6) {
+      setTimeout(() => {
+        onComplete()
+      }, 1000)
+    }
+  }, [matchedPairs, onComplete])
+
   if (!isPlaying) {
     return (
-      <BeforeGame gameName={t.challenges.memory.gameName} onPlay={() => setIsPlaying(true)} />
+      <BeforeGame
+        gameName={t.challenges.memory.gameName}
+        onPlay={() => {
+          initializeGame()
+          setIsPlaying(true)
+        }}
+      />
     )
   }
 
@@ -136,7 +136,7 @@ export const Memory: React.FC<MemoryProps> = ({ parameters: _parameters, onCompl
                 <div className={styles.cardFront} />
                 <div className={styles.cardBack}>
                   {showCard
-                  && <span className={styles.emoji}>{card.emoji}</span>}
+                    && <span className={styles.emoji}>{card.emoji}</span>}
                 </div>
               </div>
             </button>

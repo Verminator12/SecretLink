@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { Secret, ProtectionType } from '../types'
 
-export interface SecretState {
+export type SecretState = {
   content: string
   protectionType: ProtectionType | null
   password: string
