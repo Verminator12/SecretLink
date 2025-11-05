@@ -61,7 +61,7 @@ export const WordleForm: React.FC<WordleFormProps> = ({ onBack }) => {
               className={styles.input}
               disabled={loading}
               maxLength={5}
-              style={{ textTransform: 'uppercase', letterSpacing: '0.5rem', textAlign: 'center' }}
+              style={{ textTransform: 'uppercase', textAlign: 'center' }}
             />
           </div>
           <SLButton type="submit" disabled={loading || wordleWord.length !== 5} loading={loading} center>
