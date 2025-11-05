@@ -40,6 +40,21 @@
         "hard": "Difficile (16x30, 99 mines)",
         "label": "Sélectionnes la difficulté"
       }
+    },
+    "wordle": {
+      "title": "📝 Wordle",
+      "gameName": "Wordle",
+      "description": "Le destinataire devra deviner ton mot en 6 essais pour déverrouiller ton secret",
+      "form": {
+        "label": "Choisis ton mot",
+        "placeholder": "Entre un mot de 5 lettres..."
+      },
+      "guessPlaceholder": "Entre ta réponse...",
+      "submit": "Soumettre",
+      "attemptsLeft": "Essais : {attempts}/6",
+      "invalidWord": "Veuillez entrer un mot valide de 5 lettres",
+      "gameOver": "Dommage ! Le mot était : {word}",
+      "retry": "Réessayer"
     }
   },
   "beforeGame": {

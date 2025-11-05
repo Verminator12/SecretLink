@@ -5,6 +5,7 @@ export type SecretState = {
   content: string
   protectionType: ProtectionType | null
   password: string
+  wordleWord: string
   loading: boolean
   generatedMessage: Secret | null
   currentSlug: string | null
@@ -16,6 +17,7 @@ const initialState: SecretState = {
   content: '',
   protectionType: null,
   password: '',
+  wordleWord: '',
   loading: false,
   generatedMessage: null,
   currentSlug: null,
@@ -35,6 +37,9 @@ export const secretSlice = createSlice({
     },
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload
+    },
+    setWordleWord: (state, action: PayloadAction<string>) => {
+      state.wordleWord = action.payload
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload
@@ -61,6 +66,7 @@ export const {
   setContent,
   setProtectionType,
   setPassword,
+  setWordleWord,
   setLoading,
   setGeneratedMessage,
   setCurrentSlug,

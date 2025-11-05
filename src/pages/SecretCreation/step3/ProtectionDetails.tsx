@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../../hooks'
-import { RiddleForm, PasswordForm, MemoryForm, MinesweeperForm } from '../../challenges'
+import { RiddleForm, PasswordForm, MemoryForm, MinesweeperForm, WordleForm } from '../../challenges'
 
 type ProtectionDetailsProps = {
   onBack: () => void
@@ -18,6 +18,8 @@ export const ProtectionDetails: React.FC<ProtectionDetailsProps> = ({ onBack }) 
       return <RiddleForm onBack={onBack} />
     case 'minesweeper':
       return <MinesweeperForm onBack={onBack} />
+    case 'wordle':
+      return <WordleForm onBack={onBack} />
     default:
       return null
   }

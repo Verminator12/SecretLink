@@ -15,6 +15,7 @@ const challenges: ProtectionType[] = [
   'memory',
   'riddle',
   'minesweeper',
+  'wordle',
 ]
 
 export const ChooseProtection: React.FC<ChooseProtectionProps> = ({

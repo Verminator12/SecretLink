@@ -40,6 +40,21 @@
         "hard": "Hard (16x30, 99 mines)",
         "label": "Select difficulty"
       }
+    },
+    "wordle": {
+      "title": "📝 Wordle",
+      "gameName": "Wordle",
+      "description": "The recipient will need to guess your word in 6 tries to unlock the secret",
+      "form": {
+        "label": "Choose your word",
+        "placeholder": "Enter a 5-letter word..."
+      },
+      "guessPlaceholder": "Enter your guess...",
+      "submit": "Submit",
+      "attemptsLeft": "Attempts: {attempts}/6",
+      "invalidWord": "Please enter a valid 5-letter word",
+      "gameOver": "Game Over! The word was: {word}",
+      "retry": "Try Again"
     }
   },
   "beforeGame": {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { LuClock } from 'react-icons/lu'
 import { SecretService } from '../../services/api'
-import { Password, Memory, Riddle, Minesweeper } from '../challenges'
+import { Password, Memory, Riddle, Minesweeper, Wordle } from '../challenges'
 import { useTranslation } from '../../hooks/useTranslation'
 import { useCountdown } from '../../hooks/useCountdown'
 import { SLButton } from '../../components'
@@ -129,6 +129,13 @@ export const SecretReveal: React.FC<SecretRevealProps> = ({ slug }) => {
       case 'minesweeper':
         return (
           <Minesweeper
+            parameters={message.protection_data}
+            onComplete={handleChallengeComplete}
+          />
+        )
+      case 'wordle':
+        return (
+          <Wordle
             parameters={message.protection_data}
             onComplete={handleChallengeComplete}
           />
