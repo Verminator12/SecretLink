@@ -52,7 +52,8 @@
       "guessPlaceholder": "Enter your guess...",
       "submit": "Submit",
       "attemptsLeft": "Attempts: {attempts}/6",
-      "invalidWord": "Please enter a valid 5-letter word",
+      "invalidWord": "Not a valid word. Please try again.",
+      "notInWordList": "Word not in dictionary. Try another word.",
       "gameOver": "Game Over! The word was: {word}",
       "retry": "Try Again"
     }

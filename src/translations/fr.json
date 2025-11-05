@@ -52,7 +52,8 @@
       "guessPlaceholder": "Entre ta réponse...",
       "submit": "Soumettre",
       "attemptsLeft": "Essais : {attempts}/6",
-      "invalidWord": "Veuillez entrer un mot valide de 5 lettres",
+      "invalidWord": "Ce mot n'est pas valide. Réessaye.",
+      "notInWordList": "Mot non trouvé dans le dictionnaire. Essaye un autre mot.",
       "gameOver": "Dommage ! Le mot était : {word}",
       "retry": "Réessayer"
     }

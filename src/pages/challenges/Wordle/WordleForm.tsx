@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { setWordleWord, setGeneratedMessage, setStep, setIsTransitioning, setLoading } from '../../../store/secretSlice'
 import { SecretService } from '../../../services/api'
 import { SLButton } from '../../../components'
+import { isValidWord } from '../../../utils/wordList'
 import styles from '../ChallengeForm.module.scss'
 
 type WordleFormProps = {
@@ -14,18 +15,26 @@ export const WordleForm: React.FC<WordleFormProps> = ({ onBack }) => {
   const { backToOptions, sendingButton, generateButton, challenges: { wordle: wordleText } } = useTranslation()
   const dispatch = useAppDispatch()
   const { wordleWord, content, loading } = useAppSelector(state => state.secret)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!isValidWord(wordleWord)) {
+      setError(wordleText.invalidWord)
+      return
+    }
+
+    setError(null)
     dispatch(setLoading(true))
 
-    const { data, error } = await SecretService.createMessage(
+    const { data, error: apiError } = await SecretService.createMessage(
       content,
       'wordle',
       wordleWord.toUpperCase(),
     )
 
-    if (!error && data) {
+    if (!apiError && data) {
       dispatch(setGeneratedMessage(data))
       dispatch(setIsTransitioning(true))
       setTimeout(() => {
@@ -41,6 +50,7 @@ export const WordleForm: React.FC<WordleFormProps> = ({ onBack }) => {
     const value = e.target.value.toUpperCase()
     if (value.length <= 5 && /^[A-Z]*$/.test(value)) {
       dispatch(setWordleWord(value))
+      setError(null)
     }
   }
 
@@ -63,6 +73,7 @@ export const WordleForm: React.FC<WordleFormProps> = ({ onBack }) => {
               maxLength={5}
               style={{ textAlign: 'center' }}
             />
+            {error && <p className={styles.error}>{error}</p>}
           </div>
           <SLButton type="submit" disabled={loading || wordleWord.length !== 5} loading={loading} center>
             {loading ? sendingButton : generateButton}

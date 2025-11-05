@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from '../../../hooks'
 import { SLButton } from '../../../components'
+import { isValidWord } from '../../../utils/wordList'
 import styles from './Wordle.module.scss'
 
 type WordleProps = {
@@ -60,6 +61,11 @@ export const Wordle: React.FC<WordleProps> = ({ parameters, onComplete }) => {
 
     if (currentGuess.length !== 5) {
       setError(t.challenges.wordle.invalidWord)
+      return
+    }
+
+    if (!isValidWord(currentGuess)) {
+      setError(t.challenges.wordle.notInWordList)
       return
     }
 
