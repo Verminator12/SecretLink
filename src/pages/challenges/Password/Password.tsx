@@ -22,6 +22,7 @@ export const Password: React.FC<PasswordProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const hashedPassword = await hashText(password)
+
     if (hashedPassword === parameters) {
       setIsUnlocking(true)
       setTimeout(() => {
